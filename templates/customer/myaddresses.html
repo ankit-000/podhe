@@ -1,0 +1,49 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load csswidgets %}
+{% load customwidgets %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row m-auto">
+        <div class="col-1 col-md col-lg"></div>
+        <div class="col-10 col-lg-8 p-0 my-5">
+            <div class="row rounded m-0">                
+                {% for address in addresses  %}
+                <div class="col shdw1  m-2 p-3">
+                    {% if address.is_primary %}
+                    <h5 class="fw-bold">Default Address</h5>
+                    <hr class="m-0 p-0">
+                    {% endif %}
+                    
+                    <p class="lh-1 mt-2">Contact Person: {{address.contactPerson}}<p>                    
+                    <p class="lh-1 ">Contact Number: {{address.contactNumber}}<p>                    
+                    <p class="lh-1">{{address.address1}}, {{address.address2}}<p>                    
+                        <p class="lh-1">Near: {{address.landMark}}</p>
+                        <p class="lh-1">{{address.state|hyphenurl}} - {{address.pinCode}}<p>
+                    <div class="d-flex justify-content-center">
+                    <a href="{% url 'address' address.id %}" class="btn btn-outline-secondary d-inline-block mt-2 me-2">Update</a> 
+                    <a href="{% url 'deleteaddress' address.id %}" class="btn btn-outline-danger mt-2 me-2">Delete</a> 
+                    {% if address.is_primary == False %}
+                    <a href="{% url 'setasdefault' address.id %}" class="btn btn-outline-success mt-2">Set as Default</a> 
+                    {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="col-12 col-lg  shdw1 text-center  p-0 m-2 d-grid">                    
+                       <div class="align-self-center fs-xxlarge"><a href="{% url 'address' %}" class="text-decoration-none txt-green">
+                        <i class="fas fa-plus-circle"></i>
+                       </a></div>  
+                </div>
+            </div>
+        </div>
+        <div class="col-1 col-md col-lg"></div>
+    </div>
+</div>
+
+
+{% endblock content %}
+

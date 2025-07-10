@@ -1,0 +1,85 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load csswidgets %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row m-auto">
+        <div class="col-1 col-md col-lg"></div>
+        <div class="col-10 col-lg-8 p-0 my-5 bg-light">
+            <div class="row rounded shdw3 m-0 lback2 bg-light imghidesm">
+                <div class="col-3 p-0 rounded-start">
+                    <!-- <img src="{% static 'assets/leaves.jpg' %}" class="img-fluid rounded-start" alt=""> -->
+                </div>
+                <div class="col-12 col-md-9 col-lg-9 align-self-center">
+                    <span
+                        class="fw-bold rounded-top text-black ms-5 px-4 py-3 fw-bolder d-block h4">Update Bank Details</span>
+                    <form action="" method="POST">
+                        {% csrf_token %}                       
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                class="fas fa-home"></i></span>
+                            {{form.bankName|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Name of Bank"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.bankName.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                class="fas fa-home"></i></span>
+                            {{form.IFSCCode|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:IFSC Code"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.IFSCCode.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                class="fas fa-map"></i></span>
+                            {{form.bankAccountNumber|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Account Number"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.bankAccountNumber.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                class="fas fa-map"></i></span>
+                            {{form.confirmAccountNumber|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Confirm Account Number"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.confirmAccountNumber.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                class="fas fa-home"></i></span>
+                            {{form.accountName|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Account in name of"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.accountName.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                class="fas fa-home"></i></span>
+                            {{form.accountType|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Account Type"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.accountType.errors|striptags}}</span>
+
+
+
+                        <div class="d-grid px-4 pb-4">
+                            <button type="submit" class="btn btn-lg bg-green text-light mt-1 rounded-1">Save Address</button>
+                            {% if request.GET.next %}
+                            <input type="hidden" name="next" value="{{request.GET.next}}" />
+                            {% endif %}
+                        </div>
+
+                    </form>                   
+
+                </div>
+            </div>
+        </div>
+        <div class="col-1 col-md col-lg"></div>
+    </div>
+</div>
+
+
+{% endblock content %}
+

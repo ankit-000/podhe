@@ -1,0 +1,308 @@
+{% load static %}
+{% load customwidgets %}
+<div class="container">
+  <div class="desktop">
+    <div class="row">
+      <div class="col">
+        <a class="navbar-brand" href="/">
+          <img class="img-fluid  mt-1" src="{% static 'assets/logo.jpg' %}" width="200px" alt="">
+        </a>
+
+      </div>
+      <div class="col">
+        <div class="col-12 col-lg">
+          <form action="{% url 'search' %}" class="searchgroup" style="z-index:1;">
+            <div class="input-group">
+              <input type="text" class="form-control searchbox" name="search">
+              <button type="submit" class="btn bg-green"><i class="fa fa-search"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {% comment %} <div class="col searchgroup text-start">
+        <form action="{% url 'pinproducts' %}" method="GET" class="">
+          <div class="input-group">
+            <span class="border-0 me-1 fw-bold" style="padding-top:7px;">Pincode:</span>
+            {% if request|pinvalue == False %}
+            <input type="text" name="filterpincode" id="pinbox" readonly class="form-control-plaintext" value="All"
+              style="width:20px;">
+            {% else %}
+            <input type="text" name="filterpincode" id="pinbox" readonly class="form-control-plaintext rounded"
+              value="{{request|pinvalue}}" style="width:55px;">
+            {% endif %}
+            <a class="btn-link btn mt-0 ms-0 ps-1 pe-0 text-decoration-none" id="pinbtn" onclick="showform()">Change</a>
+            <button type="submit" id="pinsubmit" class="btn bg-green text-dark mt-0 me-0 text-decoration-none"
+              hidden="hidden">Change</button>
+
+          </div>
+        </form>
+      </div> {% endcomment %}
+
+      <div class="col searchgroup2">	
+	<div class="float-start me-3 text-center">
+        <a href="{% url 'home' %}" class="text-decoration-none text-black">
+          <i class="fas fa-home cicon bg-green"></i>
+          <span class="d-block fw-bold fs-smaller">Home</span>
+        </a>
+      </div>
+        {% if user.is_anonymous %}
+        <div class="float-start me-3 text-center">
+          <a href="{% url 'login' %}" class="text-decoration-none text-black">
+            <i class="fas fa-user cicon bg-green"></i>
+            <span class="d-block fw-bold fs-smaller">Login</span>
+          </a>
+        </div>
+        <div class="float-start me-3 text-center">
+          <a href="{% url 'signup' %}" class="text-decoration-none text-black">
+            <i class="fas fa-sign-in-alt bg-green cicon"></i>
+            <span class="d-block fw-bold fs-smaller">Sign Up</span>
+          </a>
+        </div>
+        {% endif %}
+        {% if user.is_anonymous or user.is_customer %}
+        <div class="float-start me-1 text-center position-relative">
+          <a href="{% url 'cartsummary' %}" class="text-decoration-none text-black">
+            <i class="fas fa-shopping-cart cicon bg-green"></i>
+            <span class="d-block fw-bold fs-smaller">Cart</span>
+          </a>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{request.session.cart.keys|length}}
+          </span>
+        </div>
+        {% endif %}
+        {% if not user.is_anonymous %}
+        <div class="float-start me-2 text-center" style="margin-top:-7px;">
+          <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fas fa-user bg-green cicon"></i>
+            <span class="d-block fw-bold fs-smaller">Account</span>
+          </a>
+          {% if user.is_customer %}
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item fs-small" href="{% url 'profile' %}">Profile</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'myaddresses' %}">Addresses</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'wishlist' %}">Wishlist</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'orders' %}">Orders</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'changepassword' %}">Change Password</a></li>
+            
+          </ul>
+          {% elif user.is_vendor %}
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:dashboard' %}">Dashboard</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'products' %}">Manage Products</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:orders' %}">Manage Orders</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:profile' %}">Profile</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:address' %}">Address</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:bankdetails' %}">Bank Details</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:changepassword' %}">Change Password</a></li>
+            
+          </ul>
+          {% endif %}
+          {% endif %}
+        </div>
+        {% if not user.is_anonymous %}
+        <div class="float-start me-3 text-center">
+          <a href="{% url 'vendor:logout' %}" class="text-decoration-none text-black">
+            <i class="fas fa-sign-out-alt bg-green cicon"></i>
+            <span class="d-block fw-bold fs-smaller">Sign Out</span>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mobile">
+    <span style="font-size:30px;cursor:pointer;margin-top:20px;" class="d-block float-start"  onclick="openNav()">&#9776;</span>
+    <a href="/"><img class="img-fluid mt-1 float-start d-block" src="{% static 'assets/logo.jpg' %}" width="140px" alt=""></a>
+
+    <div class="float-end mt-4 me-4">
+      {% if user.is_anonymous or user.is_customer %}
+        <div class="float-start me-1 text-center position-relative">
+          <a href="{% url 'cartsummary' %}" class="text-decoration-none text-black">
+            <i class="fas fa-shopping-cart cicon bg-green"></i>
+            <span class="d-block fw-bold fs-smaller">Cart</span>
+          </a>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{request.session.cart.keys|length}}
+          </span>
+        </div>
+        {% endif %}
+    </div>
+
+    {% comment %} <div class="float-end mt-4 me-5">
+      <form action="{% url 'pinproducts' %}" method="GET" class="">
+        <div class="input-group">
+          <span class="border-0 me-1 fw-bold" style="padding-top:7px;">Pincode:</span>
+          {% if request|pinvalue == False %}
+          <input type="text" name="filterpincode" id="" readonly class="form-control-plaintext pinbox" value="All"
+            style="width:20px;">
+          {% else %}
+          <input type="text" name="filterpincode" id="" readonly class="form-control-plaintext rounded pinbox"
+            value="{{request|pinvalue}}" style="width:55px;">
+          {% endif %}
+          <a class="btn-link btn mt-0 ms-0 ps-1 pe-0 text-decoration-none pinbtn" id="" onclick="showform()">Change</a>
+          <button type="submit" id="" class="btn bg-green text-dark mt-0 me-0 text-decoration-none pinsubmit"
+            hidden="hidden">Change</button>
+
+        </div>
+      </form>
+    </div>
+    {% endcomment %}
+    
+    <div class="px-2">
+      <form action="{% url 'search' %}" class="" style="z-index:1;">
+        <div class="input-group">
+          <input type="text" class="form-control searchbox" name="search">
+          <button type="submit" class="btn bg-green"><i class="fa fa-search"></i></button>
+        </div>
+      </form>
+    </div>
+    
+  
+  </div>
+</div>
+<div id="mySidenav" class="sidenav">
+  
+  <div class="bg-white p-1">
+    <a href="/" class="sidelogo p-0"><img class="img-fluid" src="{% static 'assets/logo.jpg' %}" width="140px" alt=""></a>
+    <div class="clearfix"></div>
+  <a href="javascript:void(0)" class="closebtn float-end border-0" onclick="closeNav()">&times;</a>
+</div>
+  
+  
+  {% if user.is_anonymous %}
+  <a href="{% url 'login' %}" class="text-decoration-none">
+    <i class="fas fa-user"></i>
+    <span class="fw-bold">Login</span>    
+  </a>
+  <hr class="p-0 m-0"/>
+  <a href="{% url 'signup' %}" class="text-decoration-none">
+    <i class="fas fa-sign-in-alt"></i>
+    <span class="fw-bold">Sign Up</span>  
+  </a>
+  
+  {% endif %}
+
+
+  {% if not user.is_anonymous %}
+  {% if user.is_customer %}          
+            <a class="" href="{% url 'profile' %}">Profile</a>
+            <a class="" href="{% url 'myaddresses' %}">Addresses</a>
+            <a class="" href="{% url 'wishlist' %}">Wishlist</a>
+            <a class="" href="{% url 'orders' %}">Orders</a>
+            <a class="" href="{% url 'changepassword' %}">Change Password</a>
+            <a class="" href="{% url 'logout' %}">Sign Out</a>
+          </ul>
+    {% elif user.is_vendor %}
+          
+            <a class="fs-small" href="{% url 'vendor:dashboard' %}">Dashboard</a>
+            <a class="fs-small" href="{% url 'products' %}">Manage Products</a>
+            <a class="fs-small" href="{% url 'vendor:orders' %}">Manage Orders</a>
+            <a class="fs-small" href="{% url 'vendor:profile' %}">Profile</a>
+            <a class="fs-small" href="{% url 'vendor:address' %}">Address</a>
+            <a class="fs-small" href="{% url 'vendor:bankdetails' %}">Bank Details</a>
+            <a class="fs-small" href="{% url 'vendor:changepassword' %}">Change Password</a>
+            <a class="fs-small" href="{% url 'vendor:logout' %}">Sign Out</a>
+          </ul>
+          {% endif %}
+  {% endif %}
+</div>
+
+
+<div class="d-flex justify-content-around m-auto px-5 categories text-center container p-0">
+
+  {% for category in categories  %}
+  
+    <a href="{% url 'category' category.categoryName %}">
+      <div class="py-2 text-center rounded">
+        <img src="{{category.categoryImage.url}}" alt="Flower Vase" class="img-fluid">
+        <span class="d-block pt-2 fw-bold">{{category.categoryName}}</span>
+      </div>
+    </a>
+    
+  
+  {% endfor %}
+  
+</div>
+
+</div>
+
+
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "200px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script> 
+
+<script>
+  function unhideform() {
+    $("#addpinbox").attr("hidden", "hidden")
+    $("#pinbox").removeAttr("hidden")
+  }
+</script>
+
+<script>
+  function showform() {
+
+    $(".pinbox").removeAttr("readonly")
+    $(".pinbox").removeClass("form-control-plaintext")
+    $(".pinbox").addClass("form-control")
+    $(".pinbox").removeAttr("style")
+    $(".pinbox").val("")
+    $(".pinbox").attr("style", "max-width:100px;")
+    $(".pinbtn").attr("hidden", "hidden")
+    $(".pinsubmit").removeAttr("hidden")
+  }
+</script>
+{% comment %} <button onclick="getLocation()">Try It</button>
+<p id="demo"></p>
+<span id="latitude"></span>
+<span id="longitude"></span> {% endcomment %}
+
+{% comment %} <script>
+  var x = document.getElementById("demo");
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition(showPosition);
+    } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+
+  function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude +
+      "<br>Longitude: " + position.coords.longitude;
+    document.getElementById("latitude").innerHTML = position.coords.latitude
+    document.getElementById("longitude").innerHTML = position.coords.longitude
+  }
+</script> {% endcomment %}
+
+
+{% comment %} <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
+<span style="font-size:30px;cursor:pointer" class="hiddenbar" onclick="openNav()">&#9776; open</span>
+</div>
+
+
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script> {% endcomment %}

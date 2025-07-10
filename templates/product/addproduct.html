@@ -1,0 +1,275 @@
+{% extends 'design.html' %}
+{% load csswidgets %}
+
+{% block content %}
+<div class="row container  shdw3 m-3 p-5">
+    <div class="col">
+        <h1 class="p-4">Add/Update Product</h1>
+        <form method="POST" class="p-4" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.media}}
+
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-circle"></i></span>
+            {{form.category|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Category"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.category.errors|striptags}}</span>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-atom"></i></span>
+            {{form.productName|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Product Name"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.productName.errors|striptags}}</span>
+   
+
+<label class="ps-2 mb-2 fw-bold" for="">Product Tags</label>
+<div class="input-group mb-3 bg-light rounded p-2 border shadow-sm">
+
+    {% for tag in form.tagCloud  %}
+    <ul class="list-unstyled text-center">
+        <li class="p-2 m-0">{{tag}}</li>
+    </ul>
+    {% endfor %}
+</div>
+<span class="text-danger d-block mt-2">{{form.tagcloud.errors|striptags}}</span>
+
+<label class="ps-2 mb-2 fw-bold" for="">Product Description </label>
+<div class="input-group mb-3">
+    {{form.productDescription|add_class:"form-control form-control-lg"|attr:"placeholder:Description"}}
+</div>
+<span class="text-danger d-block mt-2">{{form.productDescription.errors|striptags}}</span>
+
+<div class="row">
+    <div class="col-lg-4">
+        
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-map"></i></span>
+            {{form.productMRP|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:MRP"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.productMRP.errors|striptags}}</span>
+    </div>
+    <div class="col-lg-4">
+        
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-map"></i></span>
+            {{form.productSalePrice|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Sale Price"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.productSalePrice.errors|striptags}}</span>
+    </div>
+    <div class="col-lg-4">
+        
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-percent"></i></span>
+            {{form.taxPercent|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Tax Percent"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.productSalePrice.errors|striptags}}</span>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-lg-4">
+        <label class="ps-2 mb-2 fw-bold" for="">Select Season</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-map"></i></span>
+            {{form.season|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.season.errors|striptags}}</span>
+    </div>
+    <div class="col-lg-4">
+        <label class="ps-2 mb-2 fw-bold" for="">Select Occasion</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-map"></i></span>
+            {{form.occasion|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.occasion.errors|striptags}}</span>
+    </div>
+
+    <div class="col-lg-4">
+        <label class="ps-2 mb-2 fw-bold" for="">Select Size</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-map"></i></span>
+            {{form.size|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.size.errors|striptags}}</span>
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <label class="ps-2 mb-2 fw-bold" for="">GiftPack?</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-map"></i></span>
+            {{form.giftPack|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.giftPack.errors|striptags}}</span>
+    </div>
+    <div class="col-lg-6">
+        <label class="ps-2 mb-2 fw-bold" for="">Combo Pack?</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-map"></i></span>
+            {{form.comboPack|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.comboPack.errors|striptags}}</span>
+    </div>
+</div>
+
+
+<div class="d-grid">
+    <button type="submit" class="btn btn btn-danger mt-3 rounded">Save Product</button>
+
+</div>
+
+        </form>        
+    </div>
+</div>
+
+{% endblock content %}
+
+
+<div class="shdw1 rounded-3 col-lg-9 m-5 m-lg-auto mb-5 container">
+    <span class="fw-bold p-2 rounded-top  p-4 py-3 text-black fw-bolder  opacity-50 d-block h4 border-bottom">Add/Edit product</span>
+
+    <form method="POST" class="p-4" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        
+            
+              
+            
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                            class="fas fa-atom"></i></span>
+                    {{form.productName|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Product Name"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.productName.errors|striptags}}</span>
+           
+        
+        <label class="ps-2 mb-2 fw-bold" for="">Product Tags</label>
+        <div class="input-group mb-3 bg-light rounded p-2 border shadow-sm">
+
+            {% for tag in form.tagCloud  %}
+            <ul class="list-unstyled text-center">
+                <li class="p-2 m-0">{{tag}}</li>
+            </ul>
+            {% endfor %}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.tagcloud.errors|striptags}}</span>
+
+        <label class="ps-2 mb-2 fw-bold" for="">Product Description </label>
+        <div class="input-group mb-3">
+            {{form.productDescription|add_class:"form-control form-control-lg"|attr:"placeholder:Description"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.productDescription.errors|striptags}}</span>
+
+        <div class="row">
+            <div class="col-lg-4">
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                            class="fas fa-map"></i></span>
+                    {{form.productMRP|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:MRP"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.productMRP.errors|striptags}}</span>
+            </div>
+            <div class="col-lg-4">
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                            class="fas fa-map"></i></span>
+                    {{form.productSalePrice|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Sale Price"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.productSalePrice.errors|striptags}}</span>
+            </div>
+            <div class="col-lg-4">
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                            class="fas fa-percent"></i></span>
+                    {{form.taxPercent|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Tax Percent"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.productSalePrice.errors|striptags}}</span>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-lg-4">
+                <label class="ps-2 mb-2 fw-bold" for="">Select Season</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                            class="fas fa-map"></i></span>
+                    {{form.season|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.season.errors|striptags}}</span>
+            </div>
+            <div class="col-lg-4">
+                <label class="ps-2 mb-2 fw-bold" for="">Select Occasion</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                            class="fas fa-map"></i></span>
+                    {{form.occasion|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.occasion.errors|striptags}}</span>
+            </div>
+
+            <div class="col-lg-4">
+                <label class="ps-2 mb-2 fw-bold" for="">Select Size</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                            class="fas fa-map"></i></span>
+                    {{form.size|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.size.errors|striptags}}</span>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <label class="ps-2 mb-2 fw-bold" for="">GiftPack?</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                            class="fas fa-map"></i></span>
+                    {{form.giftPack|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.giftPack.errors|striptags}}</span>
+            </div>
+            <div class="col-lg-6">
+                <label class="ps-2 mb-2 fw-bold" for="">Combo Pack?</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                            class="fas fa-map"></i></span>
+                    {{form.comboPack|add_class:"form-select form-select-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Old Password"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.comboPack.errors|striptags}}</span>
+            </div>
+        </div>
+
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn btn-danger mt-3 rounded">Save Product</button>
+
+        </div>
+
+    </form>
+
+</div>
+
+<br>

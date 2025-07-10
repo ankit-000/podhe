@@ -1,0 +1,57 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load csswidgets %}
+
+{% block content %}
+<div class="container">
+    <div class="row m-auto">
+        <div class="col-1 col-md col-lg"></div>
+        <div class="col-10 col-lg-8 p-0 my-5 bg-light">
+            <div class="row rounded shdw3 m-0 lback4 bg-light imghidesm">
+                <div class="col-5 p-0 rounded-start">
+                    <!-- <img src="{% static 'assets/leaves.jpg' %}" class="img-fluid rounded-start" alt=""> -->
+                </div>
+                <div class="col-12 col-md-7 col-lg-7 align-self-center">
+                    <span
+                        class="fw-bold rounded-top text-black px-4 py-3 fw-bolder d-block h4 border-bottom">Request Custom/Unlisted Product</span>
+                    <form action="{% url 'requestproduct' %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                    class="fas fa-envelope"></i></span>
+                            <input type="text" class="form-control border-start-0 border-dark" name="email" placeholder="Email Address">
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.email.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                    class="fas fa-user"></i></span>
+                            <input type="text" class="form-control border-start-0 border-dark" name="fullname" placeholder="Your Full Name">
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.fullname.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                        <textarea rows="6" name="requesttext" class="form-control border-dark"></textarea>
+                        </div>
+                        <div class="d-grid px-4 pb-4">
+                            <button type="submit" class="btn btn-lg bg-green text-light mt-1 rounded-1">Submit Request</button>
+                            
+                        </div>
+
+                    </form>
+                    
+
+                </div>
+            </div>
+        </div>
+        <div class="col-1 col-md col-lg"></div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+
+

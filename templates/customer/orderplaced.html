@@ -1,0 +1,32 @@
+{% extends 'design.html' %}
+{% load customwidgets %}
+{% block content %}
+
+<div class="bg-lgreen p-4 shdw1 fs-3">Order Placed Successfully!</div>
+
+<div class="bg-lgreen p-4 shdw1 mt-2">
+    <h4>{{order.orderId}}</h4>
+    {{order.orderStatus}}
+    {{order.orderedOn}}
+    {% for item in order.orderitems_set.all %}
+    <div class="m-2 text-center text-lg-start">
+        <span class="fw-bold mb-2 d-inline-block"><a href="{% url 'details' item.id %}" style="color:black;">{{item.productName}}</a></span><br>
+        <span class="fw-bold me-5">Price: Rs. {{item.paidPrice|floatformat:2}}</span>
+        <span class="fw-bold me-5">Tax:  Rs. {{item.taxamt|floatformat:2}}</span>
+        <span class="fw-bold me-5">Discount:  Rs. {{item.discountamt|floatformat:2}}</span>
+        <span class="fw-bold">{{item.quantity}} Unit(s)</span>
+        <span>
+        {% if order.orderStatus == "delivered" and order.deliveryDate|returnvalid and item.returnRequested == False %}            
+        <form action="{% url 'returnproduct' item.id %}" method="POST" class="d-inline">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger btn-sm p-1 ms-2">Return</button>
+            <button type="submit" class="theme-btn-1 btn btn-effect-1">Save Address</button>
+        </form>
+        {% elif item.returnRequested %}
+        <span class="text-danger ms-2 fw-bold">{{item.returnStatus}}</span>
+        {% endif %}
+        </span>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

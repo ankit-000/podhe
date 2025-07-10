@@ -1,0 +1,40 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load csswidgets %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row rounded m-0 pt-5">                
+        
+        <div class="col rounded text-center shdw1 bg-lgreen m-2 p-3">                    
+            <span class="h1 fw-bold d-block">Orders</span>
+            <span class="fs-xxlarge fw-bold d-block">{{orders}}</span>
+            <a href="{% url 'vendor:orders' %}" class="btn shdw1 fw-bold btn-lg d-block btn-outline-secondary text-dark">View All Orders</a>
+        </div>
+        
+        <div class="col rounded text-center shdw1 bg-lgreen m-2 p-3">                    
+            <span class="h1 fw-bold d-block">Products</span>
+               <span class="fs-xxlarge fw-bold d-block">{{products}}</span>
+        <a href="{% url 'products' %}" class="btn shdw1 fw-bold btn-lg d-block  btn-outline-secondary text-dark">View Products</a>
+        </div>        
+
+     <div class="col rounded text-center shdw1 bg-lgreen m-2 p-3">                    
+        <span class="h1 fw-bold d-block mb-5">Sales Today</span>
+        <span class="fs-xxlarge fw-bold d-block">{{sales}}</span>
+        {% comment %} <a href="#" class="btn shdw1 fw-bold btn-lg d-block btn-outline-secondary text-dark">All Sales</a> {% endcomment %}
+    </div>
+    <div class="col text-center rounded shdw1 bg-lgreen m-2 p-3">                            
+        <span class="h1 fw-bold d-block mb-5">Total Sales</span>
+        
+        <span class="fs-xxlarge fw-bold d-block"> ₹{{totalsales|floatformat:2}}</span>
+        {% comment %} <a href="#" class="btn shdw1 fw-bold btn-lg bg-green text-light d-block">Withdraw</a> {% endcomment %}
+    </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+

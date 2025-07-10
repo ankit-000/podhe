@@ -1,0 +1,116 @@
+{% extends 'design.html' %}
+{% load csswidgets %}
+{% load imagekit %}
+
+{% block content %}
+<div class="row container m-0 p-5">   
+    <div class="col-12 col-lg p-5 m-2  shdw1 d-grid">
+       <div class="align-self-center">
+           
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label class="ps-2 mb-2 fw-bold" for="">Add a new Media File</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text border-dark   border-end-0 rounded-start"><i
+                            class="fas fa-font"></i></span>
+                    {{form.productmedia|add_class:"form-control border-dark rounded-end border-start-0"}}
+                </div>
+                <span class="text-danger d-block mt-2">{{form.productmedia.errors|striptags}}</span>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn btn-danger mt-3 rounded">Add Media File</button>        
+                </div>
+            </form>
+           
+       </div>
+    </div>
+
+        {% if media.count == 0 %}
+        <div class="col-12 col-lg p-5 m-2 text-center  shdw1 fw-bold d-grid"> 
+        <div class="align-self-center">No Media Files Added!</div></div>
+        {% else %}
+        {% for file in media %}
+        <div class="col-12 col-lg shdw1  m-2 p-4 text-center vw-100">
+            {% thumbnail '280x200' file.productmedia -- class="img-fluid"  %}
+            {% if file.mainimage == True %}
+    <br>
+    <a href="#" class="btn btn-outline-primary m-2 btn-sm">Primary Image</a>
+    {% else %}
+    <br>
+    <form action="{% url 'deletemedia' file.product_id file.id %}" method="POST" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger  m-2 btn-sm">Delete</button>
+    </form>
+
+    <form action="{% url 'makeprimary' file.product_id file.id %}" method="POST" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary m-2 btn-sm">Make Primary</button>
+    </form>
+    {% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+        
+</div>
+
+
+
+
+{% endblock content %}
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function () { // check whether your page is loadded fully
+        $("img").each(function () { // for each img it will assign img-responsive class or img-fluid 
+            $(this).addClass("img-fluid p-2")
+        })
+    })
+</script>
+{% endblock script %}
+
+
+
+
+{% if media.count == 0 %}
+No Media Files
+{% else %}
+{% for file in media %}
+<div class="float-start p-2 bg-light shdw3  m-2 text-center">
+    {% thumbnail '280x200' file.productmedia %}
+
+    {% if file.mainimage == True %}
+    <br>
+    <a href="#" class="btn btn-outline-primary m-2 btn-sm">Primary Image</a>
+    {% else %}
+    <br>
+    <form action="{% url 'deletemedia' file.product_id file.id %}" method="POST" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger  m-2 btn-sm">Delete</button>
+    </form>
+
+    <form action="{% url 'makeprimary' file.product_id file.id %}" method="POST" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary m-2 btn-sm">Make Primary</button>
+    </form>
+    {% endif %}
+
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="clearfix"></div>
+
+<div class="col-lg-6 shdw3 p-5 m-2 mt-4  mb-4">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label class="ps-2 mb-2 fw-bold" for="">Add a new Media File</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text border-dark   border-end-0 rounded-start"><i
+                    class="fas fa-font"></i></span>
+            {{form.productmedia|add_class:"form-control border-dark rounded-end border-start-0"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.productmedia.errors|striptags}}</span>
+        <div class="d-grid">
+            <button type="submit" class="btn btn btn-danger mt-3 rounded">Add Media File</button>
+
+        </div>
+    </form>
+</div>

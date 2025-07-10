@@ -1,0 +1,476 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load customwidgets %}
+
+{% block title1 %}{{category}}{% endblock %}
+{% block title2 %}{{category}}{% endblock %}
+{% block content %}
+  <!-- PRODUCT DETAILS AREA START -->
+  <div class="ltn__product-area ltn__product-gutter">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 order-lg-2 mb-120">
+                <div class="ltn__shop-options">
+                    <ul>
+                        <li>
+                            <div class="ltn__grid-list-tab-menu ">
+                                <div class="nav">
+                                    <a class="active show" data-toggle="tab" href="#liton_product_grid"><i class="fas fa-th-large"></i></a>
+                                    <a data-toggle="tab" href="#liton_product_list"><i class="fas fa-list"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                          <form method="GET" action="sortproducts">
+                           <div class="short-by text-center">
+                                <select class="nice-select">
+                                    <option>Default sorting</option>
+                                    <option>Sort by popularity</option>
+                                    <option>Sort by new arrivals</option>
+                                    <option>Sort by price: low to high</option>
+                                    <option>Sort by price: high to low</option>
+                                </select>
+                            </div> 
+                          </form>
+                        </li>
+                        <li>
+                           <div class="showing-product-number text-right">
+                                
+                            </div> 
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="liton_product_grid">
+                        <div class="ltn__product-tab-content-inner ltn__product-grid-view">
+                            <div class="row">
+                                <!-- ltn__product-item -->
+                                {% for product in page_obj  %}
+                                <div class="col-xl-4 col-sm-6 col-6">
+                                    <div class="ltn__product-item ltn__product-item-3 text-center">
+                                        <div class="product-img">
+                                            <a href="{% url 'details' product.id %}">{% thumbnail '280x330' product|primaryimage -- class="mb-2 img-fluid" %}</a>
+                                            <div class="product-badge">
+                                                <ul>
+                                                    <li class="sale-badge">{{product|MRPdiscount}}</li>
+                                                </ul>
+                                            </div>
+                                            <div class="product-hover-action">
+                                                <ul>
+                                                    <li>
+                                                        <button class="btn-link rounded-circle p-0 m-0" href="#" title="Quick View" data-toggle="modal" data-target="#quick_view_modal{{forloop.counter}}" value="{{product.id}}">
+                                                            <i class="far fa-eye p-3"></i>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                      <form class="d-inline-block" action="{% url 'addtocart' %}" data-toggle="modal" data-target="#add_to_cart_modal">
+                                                        <input type="text" hidden="hidden" name="pid" id="pid" value={{product.id}}>
+                                                        <button type="submit" class="btn-link rounded-circle p-0 m-0"><i class="fas fa-shopping-cart p-3 border-none"></i></button>
+                                                      </form>
+                                                      
+                                                    </li>
+                                                    <li>
+                                                      <form action="{% url 'addtowishlist' product.id %}" class="d-inline" > 
+                                                        <button type="submit" class=" btn-link rounded-circle p-0 m-0"><i class="far fa-heart p-3"></i></button>
+                                                    </form>
+                                                        
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="product-ratting">
+                                                <ul>
+                                                    <li><div data-rating-value="{{product|avgrating}}" class="fs-xlarge" data-rating-stars="5" data-rating-readonly="true" data-rating-half="true" ></div></li>                                                                           
+                                                    <li class="review-total"> <a href="#"> {{product|reviewsCount}}</a></li>
+                                                </ul>
+                                            </div>
+                                            <h2 class="product-title"><a href="{% url 'details' product.id %}">{{product.productName}}</a></h2>
+                                            <div class="product-price h6">
+                                                <span>Rs. {{product.productSalePrice}}</span>
+                                                <del>Rs. {{product.productMRP}}</del>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- MODAL AREA START (Quick View Modal) -->
+                                <div class="ltn__modal-area ltn__quick-view-modal-area">
+                                <div class="modal fade" id="quick_view_modal{{forloop.counter}}" tabindex="-1">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    <!-- <i class="fas fa-times"></i> -->
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="ltn__quick-view-modal-inner">
+                                                    <div class="modal-product-item">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-12">
+                                                                <div class="modal-product-img">
+                                                                    {% thumbnail '280x330' product|primaryimage -- class="mb-2 img-fluid" %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-12">
+                                                                <div class="modal-product-info">
+                                                                    <div class="product-ratting">
+                                                                        
+                                                                        
+                                                                        <ul>
+                                                                            <li><div data-rating-value="{{product|avgrating}}" class="fs-xlarge" data-rating-stars="5" data-rating-readonly="true" data-rating-half="true" ></div></li>                                                                           
+                                                                            <li class="review-total"> <a href="#"> {{product|reviewsCount}}</a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <h3>{{product.productName}}</h3>
+                                                                    <div class="product-price">
+                                                                        <span>Rs. {{product.productSalePrice}}</span>
+                                                                        <del>Rs. {{product.productMRP}}</del>
+                                                                    </div>
+                                                                    
+                                                                    <div class="ltn__product-details-menu-2">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <div class="cart-plus-minus">
+                                                                                    <input type="text" value="01" name="qtybutton" class="cart-plus-minus-box">
+                                                                                </div>
+                                                                            </li>
+                                                                            <li>
+                                                                                <form class="d-inline-block" action="{% url 'addtocart' %}" data-toggle="modal" data-target="#add_to_cart_modal">
+                                                                                <input type="text" hidden="hidden" name="pid" id="pid" value={{product.id}}>
+                                                                                <button type="submit" class="theme-btn-1 btn btn-effect-1"><i class="fas fa-shopping-cart"></i>ADD TO CART</button>
+                                                                                </form>
+                                                                            
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="ltn__product-details-menu-3">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <form action="{% url 'addtowishlist' product.id %}" class="d-inline" > 
+                                                                                <button type="submit" class=" btn-link rounded-circle p-0 m-0"><i class="far fa-heart p-3"></i></button>
+                                                                            </form>
+                                                                            </li>                                              
+                                                                        </ul>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <div class="ltn__social-media">
+                                                                    <h3>Product Description</h3>
+                                                                    <p>{{product.productDescription|characters}}</p>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <div class="ltn__social-media">
+                                                                        <ul>
+                                                                            <li>Share:</li>
+                                                                            <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                                                            <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                                                            <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                                                            <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                                                            
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!-- MODAL AREA END -->
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                 
+                </div>
+                <!-- <div class="ltn__pagination-area text-center">
+                    <div class="ltn__pagination">
+                        <ul>
+                            <li><a href="#"><i class="fas fa-angle-double-left"></i></a></li>
+                            {% if products.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ products.previous_page_number }}">previous</a>
+                            {% endif %}
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">...</a></li>
+                            <li><a href="#">10</a></li>
+                            <li><a href="#"><i class="fas fa-angle-double-right"></i></a></li>
+                        </ul>
+                    </div>
+                </div> -->
+
+                <div class="ltn__pagination-area text-center">
+                    <span class="step-links ltn__pagination">
+                        <ul>
+                            <li>
+                        {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-angle-double-left"></i></a>
+                       {% else %}
+                         <a><i class="fas fa-angle-double-left"></i></a>
+                       {% endif %}
+                    </li>
+                    
+                       {% for i in page_obj.paginator.page_range %}                     
+                         {% if page_obj.number == i %}
+                         <li class="active">
+                           <a href="#" >{{ i }} </a>
+                        </li>
+                         {% else %}
+                        <li>
+                           <a href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                         {% endif %}
+                        
+                       
+                       {% endfor %}
+                 
+                    <li>
+                       {% if page_obj.has_next %}
+                         <a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-angle-double-right"></i></a>
+                       {% else %}
+                         <a><i class="fas fa-angle-double-right"></i></a>
+                       {% endif %}
+                    </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4  mb-120">
+                <aside class="sidebar ltn__shop-sidebar">
+                    <!-- Category Widget -->
+                    <div class="widget ltn__menu-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
+                        <ul>
+
+                          {% for CATEGORY in request|allcategories %}
+                          <li>
+                              <a href="{% url 'category' CATEGORY.categoryName %}">{{CATEGORY.categoryName}}<span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+                          </li>
+                          {% endfor %}                           
+                        </ul>
+                    </div>
+                    {% comment %} <!-- Price Filter Widget -->
+                    <div class="widget ltn__price-filter-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Filter by price</h4>
+                        <div class="price_filter">
+                            <div class="price_slider_amount">
+                                <input type="submit"  value="Your range:"/> 
+                                <input type="text" class="amount" name="price"  placeholder="Add Your Price" /> 
+                            </div>
+                            <div class="slider-range"></div>
+                        </div>
+                    </div> {% endcomment %}
+                    <!-- Top Rated Product Widget -->
+                    <div class="widget ltn__top-rated-product-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Top Rated Product</h4>
+                        <ul>
+                            <li>
+                                <div class="top-rated-product-item clearfix">
+                                    <div class="top-rated-product-img">
+                                        <a href="{% url 'category' 'E Series Plants' %}"><img src="/static/img/icons/icon-img/E Series Plants.png" alt="#"></a>
+                                    </div>
+                                    <div class="top-rated-product-info">
+                                        <div class="product-ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h6><a href="{% url 'category' 'E Series Plants' %}">E Series Plants</a></h6>
+                                        <div class="product-price">
+                                            <span>₹500</span>
+                                            <del>₹1200</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-rated-product-item clearfix">
+                                    <div class="top-rated-product-img">
+                                        <a href="{% url 'category' 'M Series Plants' %}"><img src="/static/img/icons/icon-img/M Series Plants.png" alt="#"></a>
+                                    </div>
+                                    <div class="top-rated-product-info">
+                                        <div class="product-ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h6><a href="{% url 'category' 'M Series Plants' %}">M Series Plants</a></h6>
+                                        <div class="product-price">
+                                            <span>₹700</span>
+                                            <del>₹1800</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="top-rated-product-item clearfix">
+                                    <div class="top-rated-product-img">
+                                        <a href="{% url 'category' 'P Series Plants' %}"><img src="/static/img/icons/icon-img/P Series Plants.png" alt="#"></a>
+                                    </div>
+                                    <div class="top-rated-product-info">
+                                        <div class="product-ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                                <li><a href="#"><i class="far fa-star"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h6><a href="{% url 'category' 'P Series Plants' %}">P Series Plants</a></h6>
+                                        <div class="product-price">
+                                            <span>₹999</span>
+                                            <del>₹2000</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    {% comment %} <!-- Search Widget -->
+                    <div class="widget ltn__search-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
+                        <form action="#">
+                            <input type="text" name="search" placeholder="Search your keyword...">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div> {% endcomment %}
+                    <!-- Tagcloud Widget -->
+                    <div class="widget ltn__tagcloud-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Popular Tags</h4>
+                        <ul>
+                            <li><a href="#">Popular</a></li>
+                            {% for CATEGORY in request|allcategories %}
+                            <li><a href="{% url 'category' CATEGORY.categoryName %}">{{CATEGORY.categoryName}}</a></li>
+                            {% endfor %}   
+                        </ul>
+                    </div>
+                    <!-- Size Widget -->
+                    <div class="widget ltn__tagcloud-widget ltn__size-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Product Size</h4>
+                        <ul>
+                            <li><a href="#">Very-Small</a></li>
+                            <li><a href="#">Small</a></li>
+                            <li><a href="#">Medium</a></li>
+                            <li><a href="#">Large</a></li>
+                            <li><a href="#">Big</a></li>
+                        </ul>
+                    </div>
+                    <!-- Color Widget
+                    <div class="widget ltn__color-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Product Color</h4>
+                        <ul>
+                            <li class="black"><a href="#"></a></li>
+                            <li class="white"><a href="#"></a></li>
+                            <li class="red"><a href="#"></a></li>
+                            <li class="silver"><a href="#"></a></li>
+                            <li class="gray"><a href="#"></a></li>
+                            <li class="maroon"><a href="#"></a></li>
+                            <li class="yellow"><a href="#"></a></li>
+                            <li class="olive"><a href="#"></a></li>
+                            <li class="lime"><a href="#"></a></li>
+                            <li class="green"><a href="#"></a></li>
+                            <li class="aqua"><a href="#"></a></li>
+                            <li class="teal"><a href="#"></a></li>
+                            <li class="blue"><a href="#"></a></li>
+                            <li class="navy"><a href="#"></a></li>
+                            <li class="fuchsia"><a href="#"></a></li>
+                            <li class="purple"><a href="#"></a></li>
+                            <li class="pink"><a href="#"></a></li>
+                            <li class="nude"><a href="#"></a></li>
+                            <li class="orange"><a href="#"></a></li>
+
+                            <li><a href="#" class="orange"></a></li>
+                            <li><a href="#" class="orange"></a></li>
+                        </ul>
+                    </div> -->
+                    <!-- Banner Widget -->
+                    <!-- <div class="widget ltn__banner-widget">
+                        <a href="shop.html"><img src="img/banner/banner-1.jpg" alt="#"></a>
+                    </div> -->
+
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PRODUCT DETAILS AREA END -->
+
+
+
+{% endblock content %}
+
+
+
+
+<div class="container p-1">
+
+  {% comment %} <img src="{% static 'assets/header.jpg' %}" alt="Main Header" class="img-fluid mb-1"> {% endcomment %}
+  {% comment %} <div class="slider3">
+    <div><img src="{% static 'assets/header/header1.jpg' %}" class="img-fluid w-100" alt=""></div>
+    <div><img src="{% static 'assets/header/header2.jpg' %}" class="img-fluid w-100" alt=""></div>
+    <div><img src="{% static 'assets/header/header3.jpg' %}" class="img-fluid w-100" alt=""></div>
+    <div><img src="{% static 'assets/header/header4.jpg' %}" class="img-fluid w-100" alt=""></div>
+    <div><img src="{% static 'assets/header/header5.jpg' %}" class="img-fluid w-100" alt=""></div>
+  </div> {% endcomment %}
+
+  
+ 
+
+  {% comment %} {% include 'search.html' %} {% endcomment %}
+
+
+  <div class="row text-center m-auto ms-5">
+    {% if products.count == 0 %}
+    <hr/>
+    <p class="fs-2">Sorry! No Products found.</p>
+    <hr/>
+    {% endif %}
+
+    {% for product in products  %}
+    
+    
+    <div class="col-12 col-lg-3 p-2 m-1 pbox aos-item" data-aos="zoom-out" style="max-width:300px;">
+      <a href="{% url 'details' product.id %}">
+      {% thumbnail '280x330' product|primaryimage -- class="mb-2 img-fluid" %}
+      <h6 class="text-success"><b>{{product.productName}}</b></h6>
+      <h6 class="d-inline fw-bolder">₹ {{product.productSalePrice|floatformat:2}}</h6>
+      <h6 class="text-decoration-line-through d-inline text-danger">₹ {{product.productMRP|floatformat:2}}</h6>
+      <br />
+      <span class="text-center d-block p-3">
+        <form class="d-inline-block" action="{% url 'addtocart' %}">
+          <input type="text" hidden=hidden name="pid" id="pid" value={{product.id}}>
+          <button type="submit" class="btn bg-secondary btn-sm text-light">Add To Cart</button>
+        </form>
+        
+        <form class="d-inline-block" action="{% url 'buynow' %}">
+          <input type="text" hidden=hidden name="pid" id="pid" value={{product.id}}>
+          <button type="submit" class="btn bg-green btn-sm text-light">Buy Now</button>
+        </form>
+      </span>
+    </a>
+    </div>
+  
+
+    
+    {% endfor %}
+
+  </div>
+  {% include 'testimonials.html' %}
+</div>

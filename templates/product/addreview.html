@@ -1,0 +1,74 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load csswidgets %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row m-auto">
+        <div class="col-1 col-md col-lg"></div>
+        <div class="col-10 col-lg-8 p-0 my-5 bg-light">
+            <div class="row rounded shdw3 m-0 lback3 bg-light imghidesm">
+                <div class="col-3 p-0 rounded-start">
+                    <!-- <img src="{% static 'assets/leaves.jpg' %}" class="img-fluid rounded-start" alt=""> -->
+                </div>
+                <div class="col-12 col-md-9 col-lg-9 align-self-center">
+                    <span
+                        class="fw-bold rounded-top text-black px-4 py-3 fw-bolder d-block h4">Add a review</span>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+
+                        <div class="input-group mb-3 px-4 opacity-75 fs-xlarge" id="review">  
+                            <input type="text" name="rating" hidden="hidden" id="srating">                          
+                            {% comment %} {{form.rating|add_class:"form-control form-control-lg rounded-end border-dark"|attr:"placeholder:Review Heading"}} {% endcomment %}
+                        </div>
+
+                        <div class="input-group mb-3 px-4 opacity-75">                            
+                            {{form.reviewSubject|add_class:"form-control form-control-lg rounded-end border-dark"|attr:"placeholder:Review Heading"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.reviewSubject.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">                            
+                            {{form.reviewDescription|add_class:"form-control form-control-lg rounded-end border-dark"|attr:"placeholder:Review Description"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.reviewDescription.errors|striptags}}</span>
+
+                        
+
+
+
+                        <div class="d-grid px-4 pb-4">
+                            <button type="submit" class="btn btn-lg bg-green text-light mt-1 rounded-1">Add Review</button>                            
+                        </div>
+
+                    </form>                   
+
+                </div>
+            </div>
+        </div>
+        <div class="col-1 col-md col-lg"></div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+
+{% block scripts %}
+<script>
+    $(function(){
+        $("#review").rating({
+            "half": true,         
+            color: "#95c83d",  
+            "click": function (e) {
+                console.log(e);
+                $("#srating").val(e.stars);
+            } 
+          });
+      });
+</script>
+
+{% endblock scripts %}
+

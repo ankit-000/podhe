@@ -1,0 +1,43 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load csswidgets %}
+{% block title1 %}Sign Up{% endblock %}
+{% block title2 %}Sign Up{% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="ltn__login-area pb-110">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area text-center">
+                    <h1 class="section-title">Activate <br>Your Account</h1>
+                    
+                    <h4><p></p>Please enter the OTP we have sent to your registered Email!</p></h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="account-login-inner">
+                    <form action="" method="POST" class="ltn__form-box contact-form-box">
+                        {% csrf_token %}                       
+                        {{form.otp|attr:"placeholder:Add 6 digit OTP number here"}} 
+                        <input name="uname" value="{{ request.session.uname }}">
+                        <span class="text-danger d-block mt-2">{{form.username.errors|striptags}}</span>                        
+                            <button class="theme-btn-1 btn reverse-color btn-block" type="submit">SUBMIT</button>
+                        </div>
+                    </form>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+<p>Register to get access to vast collection of all your garden needs</p>

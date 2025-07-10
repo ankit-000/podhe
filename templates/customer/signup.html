@@ -1,0 +1,110 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load csswidgets %}
+{% block title1 %}Sign Up{% endblock %}
+{% block title2 %}Sign Up{% endblock %}
+
+{% block content %}
+
+{% comment %} <div class="container">
+    <div class="row m-auto">
+        <div class="col-1 col-md col-lg"></div>
+        <div class="col-10 col-lg-8 p-0 my-5 bg-light">
+            <div class="row rounded shdw3 m-0 lback4 bg-light imghidesm">
+                <div class="col-5 p-0 rounded-start">
+                    <!-- <img src="{% static 'assets/leaves.jpg' %}" class="img-fluid rounded-start" alt=""> -->
+                </div>
+                <div class="col-12 col-md-7 col-lg-7 align-self-center">
+                    <span
+                        class="fw-bold rounded-top text-black px-4 py-3 fw-bolder d-block h4 border-bottom">Customer Signup</span>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                    class="fas fa-envelope"></i></span>
+                            {{form.username|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:User Email"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.username.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                    class="fas fa-lock"></i></span>
+                            {{form.password1|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Password"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.password1.errors|striptags}}</span>
+
+                        <div class="input-group mb-3 px-4 opacity-75">
+                            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                                    class="fas fa-lock"></i></span>
+                            {{form.password2|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Confirm Password"}}
+                        </div>
+                        <span class="text-danger d-block mt-2">{{form.password2.errors|striptags}}</span>
+
+                        <div class="d-grid px-4 pb-4">
+                            <button type="submit" class="btn btn-lg bg-green text-light mt-1 rounded-1">Sign Up</button>                            
+                        </div>
+
+                    </form>
+                    <a href="{% url 'login' %}" class="d-inline-block ms-4 text-decoration-none btn btn-sm btn-outline-success mb-3">Login</a>
+                    <a href="{% url 'resendactivationemail' %}" class="d-inline-block text-decoration-none btn btn-sm btn-outline-secondary mb-3">Resend Activation Email?</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-1 col-md col-lg"></div>
+    </div>
+</div> {% endcomment %}
+
+
+<div class="ltn__login-area pb-110">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area text-center">
+                    <h1 class="section-title">Register <br>Your Account</h1>
+                    
+                    <h4><p></p>"Please check your Email inbox and spam folder to activate your account!"</p></h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="account-login-inner">
+                    <form action="" method="POST" class="ltn__form-box contact-form-box">
+                        {% csrf_token %}                       
+                        {{form.fullname|attr:"placeholder:Full Name"}}                       
+                        {{form.username|attr:"placeholder:User Email"}}
+                        <span class="text-danger d-block mt-2">{{form.username.errors|striptags}}</span>
+                        {{form.password1|attr:"placeholder:Password"}}
+                        <span class="text-danger d-block mt-2">{{form.password1.errors|striptags}}</span>
+                        {{form.password2|attr:"placeholder:Confirm Password"}}
+                        <span class="text-danger d-block mt-2">{{form.password2.errors|striptags}}</span>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="">
+                            I consent to Podhewale processing my personal data in order to send personalized marketing material in accordance with the consent form and the privacy policy.
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="">
+                            By clicking "create account", I consent to the privacy policy.
+                        </label>
+                        <div class="btn-wrapper">
+                            <button class="theme-btn-1 btn reverse-color btn-block" type="submit">CREATE ACCOUNT</button>
+                        </div>
+                    </form>
+                    <div class="by-agree text-center">
+                        <p>By creating an account, you agree to our:</p>
+                        <p><a href="{% url 'terms' %}">TERMS OF CONDITIONS </a> &nbsp; &nbsp; | &nbsp; &nbsp; <a href="{% url 'privacypolicy' %}"> PRIVACY POLICY</a></p>
+                        <div class="go-to-btn mt-50">
+                            <a href="{% url 'login' %}">ALREADY HAVE AN ACCOUNT ?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+<p>Register to get access to vast collection of all your garden needs</p>

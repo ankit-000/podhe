@@ -1,0 +1,114 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load csswidgets %}
+
+{% block title1 %}Address Details{% endblock %}
+{% block title2 %}Address Details{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="ltn__checkout-single-content">
+        <h2 class="mb-4 text-success">📍 Address Information</h2>
+
+        <div class="ltn__checkout-single-content-info bg-light p-4 rounded shadow-sm border">
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                <!-- Personal Info -->
+                <h4 class="mb-3">👤 Personal Information</h4>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Full Name</label>
+                        <div class="input-item input-item-name ltn__custom-icon">
+                            {{ form.contactPerson|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Contact Number</label>
+                        <div class="input-item input-item-phone ltn__custom-icon">
+                            {{ form.contactNumber|add_class:"form-control" }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Info -->
+                <hr class="my-4">
+                <h4 class="mb-3">🏠 Address Details</h4>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">House No. & Street Name</label>
+                        {{ form.address1|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Area, Location, or City</label>
+                        {{ form.address2|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Landmark</label>
+                        {{ form.landMark|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">City</label>
+                        {{ form.city|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">State</label>
+                        {{ form.state|add_class:"form-select" }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Postal Code (PIN)</label>
+                        {{ form.pinCode|add_class:"form-control" }}
+                        {% for error in form.pinCode.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-success btn-lg px-4 shadow">
+                        💾 Save Address
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+<div class="border shdw1 rounded-3  lback">
+    <span
+        class="fw-bold p-2 rounded-top  p-4 py-3 text-black fw-bolder  opacity-50 d-block h4 border-bottom">Login
+        to your account</span>
+    <form method="POST" class="p-4">
+        {% csrf_token %}
+
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-envelope"></i></span>
+            {{form.username|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:UserName"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.username.errors|striptags}}</span>
+
+
+        <div class="input-group mb-3">
+            <span class="input-group-text rounded-start  border-end-0 border-dark"><i
+                    class="fas fa-lock"></i></span>
+            {{form.password|add_class:"form-control form-control-lg rounded-end border-start-0 border-dark"|attr:"placeholder:Password"}}
+        </div>
+        <span class="text-danger d-block mt-2">{{form.password.errors|striptags}}</span>
+
+        <div class="d-grid">
+            <button type="submit" class="btn bg-green text-light mt-1 shdw rounded shadow">Login</button>
+            {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{request.GET.next}}" />
+            {% endif %}
+        </div>
+
+        <a href=""class="d-inline-block text-decoration-none btn btn-sm btn-outline-success float-start mt-4 mb-4 rounded shadow">Sign Up</a>
+        <a href="" class="d-inline-block text-decoration-none btn btn-sm btn-outline-secondary float-end mt-4 mb-4 rounded shadow">Forgot Password?</a>
+    </form>
+
+</div>

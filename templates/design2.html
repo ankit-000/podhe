@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> PodheWale |
+    {% block title %}{% endblock title %}
+  </title>
+  {% block meta %}{% endblock meta%}
+  {% comment %} CSS FILES{% endcomment %}
+  <link rel="stylesheet" href="{% static 'css/tp/bootstrap.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/tp/selectize.bootstrap5.css' %}">
+  {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" /> {% endcomment %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/brands.min.css" integrity="sha512-OivR4OdSsE1onDm/i3J3Hpsm5GmOVvr9r49K3jJ0dnsxVzZgaOJ5MfxEAxCyGrzWozL9uJGKz6un3A7L+redIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  
+  <link rel="stylesheet" href="{% static 'css/design.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/custombs.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/tp/xzoom.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/tp/magnific-popup.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/tp/bxslider.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/tp/aos.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/tp/wow.css' %}" />
+
+  {% comment %} CSS FILES END {% endcomment %}
+
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/favicon.png' %}">
+
+  {% comment %} <script src="https://unpkg.com/scrollreveal@3.3.2/dist/scrollreveal.min.js"></script> {% endcomment %}
+
+</head>
+
+<body>
+  <div class="overlay" style="display:block" hidden="hidden"></div>
+
+  {% comment %} <div class="see"><a href="#">show overlay</a></div> {% endcomment %}
+
+  
+
+  {% comment %} <div style="display:none;" id="myDiv" class="animate-bottom container-fluid"> {% endcomment %}
+    {% comment %} <div id="loader"></div> {% endcomment %}
+    <div id="" class="animate-bottom container-fluid m-0 p-0">
+    
+
+    {% include "headsection.html" %}
+    {% comment %} {% include "mainsection.html" %} {% endcomment %}
+    <div class="container-fluid p-1" style="min-height:600px;">
+      {% block content %}{% endblock content %}
+    </div>
+    {% include "footer.html" %}
+  </div>
+  
+  <a href="https://wa.me/919911554948?text=Welcom%20To%20PodheWale!"><i class="fa-brands fa-whatsapp-square whatsapp" data-bs-toggle="tooltip" data-bs-placement="left" title="Connect through Whatsapp"></i></a>
+  <a href="{% url 'requestproduct' %}" class="ondemand text-center"><i class="fas fa-envelope-open" data-bs-toggle="tooltip" data-bs-placement="left" title="Request for a custom Product"></i></a>
+  <a href="#" class="uparrow text-center"><i class="fas fa-arrow-alt-circle-up" data-bs-toggle="tooltip" data-bs-placement="left" title="Go to Top"></i></a>
+  
+ 
+
+  {% comment %} JS FILES{% endcomment %}
+  <script type="text/javascript" src="{% static 'js/tp/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tp/bxslider.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tp/popper.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tp/bootstrap.min.js' %}"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/tp/selectize.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tp/hammer.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/tp/magnific-popup.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/tp/xzoom.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tp/setup.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tp/rating.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tp/aos.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tp/wowslider.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tp/script.js' %}"></script>
+
+
+
+  {% comment %} JS FILES END{% endcomment %}
+  {% block scripts %}{% endblock scripts %}
+
+  {% if messages %}
+  <script>
+    {% for message in messages %} 
+    {%if message.tags == 'error' %}
+    swal("An error occured!", '{{message}}', "error") 
+    {% elif message.tags == 'success' %}
+    swal("Success!", '{{message}}', "success") 
+    {% elif message.tags == 'info' %}
+    swal("Please note!", '{{message}}', "info") 
+    {% elif message.tags == 'warning' %}
+    swal("Alert!", '{{message}}', "warning") 
+    {% endif %} 
+    {% endfor %}
+  </script>
+  {% endif %}
+
+  {% if form.non_field_errors %}
+  <script>
+    var err=""
+    {% for error in form.non_field_errors %}
+    err = err + '{{error}}' + "\n" 
+    {% endfor %}
+    console.log(err)
+    swal("An error occured!", err, "error")
+  </script>
+  {% endif %}
+
+
+  {% comment %} <script>
+    $(function () {
+      $("a").click(function () {
+        $(".overlay").attr("hidden", "hidden")
+
+      });
+    });
+  </script> {% endcomment %}
+  {% comment %} <script>
+    $(function () {
+      if ($("#pinbox").val() != 'All') {
+        $(".overlay").attr("hidden", "hidden")
+      } else {
+        $(".overlay").removeAttr("hidden")
+      }
+    })
+  </script> {% endcomment %}
+
+  <script>
+    $(document).ready(function () {
+      $('.slider2').bxSlider({
+        auto: true,
+        mode: 'vertical',
+        autoHover: true,
+        pager: false
+      });
+      $('.slider').bxSlider({
+        auto: true,
+        mode: 'horizontal',
+        autoHover: true,
+        pager: false
+      });
+      $('.slider3').bxSlider({
+        auto: true,
+        mode: 'horizontal',
+        autoHover: true,
+        pager: false
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+
+      AOS.init();
+
+
+
+    });
+  </script>
+
+  {% comment %} <script>
+    var cvalue = 0
+    $(document).mouseleave(function () {
+      if (cvalue == 0) {
+        swal("Please don't leave just yet!",
+          'Get a discount of 15% on your first order! \n\n Use Coupon code PODHE15', "info")
+        cvalue = 1
+      }
+
+    });
+  </script>  {% endcomment %}
+
+  <script>
+
+  
+
+    $(function(){
+      $("#loader").attr("style","display:none;")
+      $("#myDiv").attr("style","display:block;")      
+    })    
+
+  </script>
+
+ <script>
+    anm = function loopme()
+    {
+      $(".whatsapp").animate(
+        {
+          opacity:0.25,
+        },
+        1000, function()
+        {
+          $(".whatsapp").animate({
+              opacity:1,
+            },1000, anm()
+          )
+        }
+      )
+    }
+    anm();
+  </script>
+
+  <script>
+    anm2 = function loopme()
+    {
+      $(".ondemand").animate(
+        {
+          opacity:0.25,
+        },
+        1000, function()
+        {
+          $(".ondemand").animate({
+              opacity:1,
+            },1000, anm2()
+          )
+        }
+      )
+    }
+    anm2();
+  </script>
+
+  <script>
+    anm3 = function loopme()
+    {
+      $(".uparrow").animate(
+        {
+          opacity:0.25,
+        },
+        1000, function()
+        {
+          $(".uparrow").animate({
+              opacity:1,
+            },1000, anm3()
+          )
+        }
+      )
+    }
+    anm3();
+  </script> 
+
+  <script>
+    $(".uparrow").click(function () {
+        $('html, body').animate({
+            scrollTop: 0
+        }, 'fast');
+    })
+</script>
+<script>
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+  </script>
+
+  <script>
+    $(".whatsapp").hover(function() {
+      $('.whatsapp').stop(true).fadeTo(200, 1);
+    }, function() {
+      $('.whatsapp').stop(true).fadeTo(200, 1);
+    });
+  </script>
+
+  <script>
+    $(".ondemand").hover(function() {
+      $('.ondemand').stop(true).fadeTo(200, 1);
+    }, function() {
+      $('.ondemand').stop(true).fadeTo(200, 1);
+    });
+  </script>
+
+<script>
+  $(".uparrow").hover(function() {
+    $('.uparrow').stop(true).fadeTo(200, 1);
+  }, function() {
+    $('.uparrow').stop(true).fadeTo(200, 1);
+  });
+</script>
+
+
+
+</body>
+
+</html>

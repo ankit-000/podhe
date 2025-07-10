@@ -1,0 +1,367 @@
+{% extends 'design.html' %}
+{% load imagekit %}
+{% load customwidgets %}
+
+{% block title1 %}Cart Summary{% endblock %}
+{% block title2 %}Cart Summary{% endblock %}
+
+{% block content %}
+
+{% if products.count == 0  %}
+    <div class="container border p-4 pb-0 mb-5">
+    <p><b>Hey! Looks like there is nothing in your cart yet.</b> </p>
+</div>
+{% endif %}
+{% if products.count > 0  %}
+
+   
+   <!-- SHOPING CART AREA START -->
+   <div class="liton__shoping-cart-area mb-120">
+    <div class="container pt-0">
+        <div class=" mb-3 p-3 border">            
+            <h4 class=>Selected Address</h4>           
+            
+                        <b>Contact Person: {{address.contactPerson}}</b></br> 
+                        <b class="mr-2">Address</b><a href="{% url 'address' address.id %}" class="text-decoration-none p-1 rounded btn text-light btn-secondary"><b>Edit Address</b></a></br> 
+                        {{address.address1}}, {{address.address2}}, {{address.state|hyphenurl}} - {{address.pinCode}}</br> 
+                        <b>LandMark: </b>{{address.landMark}}</br> 
+                        <b>Contact Number: </b>{{address.contactNumber}}</b>               
+                        
+                        
+            
+     </div>      
+     {% comment %} <div class=" mb-3 border-top border-bottom  p-3">            
+        <h4>Billing Address</h4>
+        
+    
+        {% for address in addresses  %}
+                    {% if address.address_type == "Billing Address"  %}
+                    Contact Person: {{address.contactPerson}}, 
+                    Address: {{address.address1}},{{address.address2}},
+                    {{address.state|hyphenurl}} - {{address.pinCode}},
+                    {{address.landMark}},
+                    Contact Number: {{address.contactNumber}}               
+                    <a href="{% url 'address' address.id %}" class="text-secondary text-decoration-none">|<b>Edit</b>
+                    </a>   
+                    {% endif %}
+        {% endfor %}          
+ </div>    {% endcomment %}
+    
+       
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping-cart-inner">
+                    <div class="shoping-cart-table table-responsive">
+                        <table class="table">
+                            {% comment %} <thead>
+                                <th class="cart-product-remove">Remove</th>
+                                <th class="cart-product-image">Image</th>
+                                <th class="cart-product-info">Product</th>
+                                <th class="cart-product-price">Price</th>
+                                <th class="cart-product-quantity">Quantity</th>
+                                <th class="cart-product-quantity">Update</th>
+                                <th class="cart-product-subtotal">Subtotal</th>
+                            </thead>  {% endcomment %}
+                            <tbody>
+                                {% for product in products  %}
+                                <tr>
+                                    <td class="cart-product-remove">
+                                    <form action="{% url 'removefromcart' product.id %}" method="GET" class="">                    
+                                        <button class="btn-link rounded-circle"><i class="icon-cancel"></i></button>
+                                    </form>
+                                    </td>
+                                    <td class="cart-product-image">
+                                        <a href="{% url 'details' product.id %}"> {% thumbnail '128x128' product|primaryimage -- class="rounded img-fluid" %}</a>
+                                    </td>
+                                    <td class="cart-product-info">
+                                        <h4><a href="{% url 'details' product.id %}">{{product.productName}} </a></h4>
+                                    </td>
+                                    <td class="cart-product-price">Rs. {{product.productSalePrice}}</td>
+                                    <td class="cart-product-quantity" col-span="2">
+                                        <form action="{% url 'updatecart' product.id %}" method="GET" class="d-inline">
+                                            <div class="row m-0 p-0">
+                                                <div class="col p-0 m-0">
+                                        <div class="cart-plus-minus">
+                                            <input type="text" min="1" max="10" value="{{product.id|cartquantity:request}}" name="qtybutton" class="cart-plus-minus-box">                                            
+                                        </div>
+                                    </div>
+                                        <div class="col p-0 m-0">
+                                        <button type="submit" class="theme-btn-1 btn btn-effect-1">Update</button>
+                                        </div>
+                                    </form> 
+                                    </td>
+                                    
+                                    <td class="cart-product-subtotal">Rs. {{product.id|producttotal:request}}</td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="shoping-cart-total mt-50">
+                        <h4>Cart Totals</h4>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Cart Subtotal</td>
+                                    <td class="text-right">Rs. {{request|cartvalue|floatformat:2}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Taxes</td>
+                                    <td class="text-right"> Rs. {{products|TaxAmt:request|floatformat:2}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Discounts</td>
+                                    <td class="text-right"> Rs.{{request|discountamt|floatformat:2}}
+                                    </td>
+                                </tr>
+                                <tr>                                    
+                                    <td colspan="2" class="">          
+                                                                     
+                                        {% if request|discountamt != 0 %}                    
+                                        <form action="{% url 'removecoupon' %}">
+                                            Coupon: <b>{{couponcode}}</b>
+                                            <button class="btn btn-sm float-end">[Remove]</button>                        
+                                            </form>
+                                        {% else %}
+
+                                        
+                                        <h6 class="fw-bold">Have a Coupon?</h6>
+                                        <form action="{% url 'applycoupon' %}">   
+                                        <div class="row m-auto">
+                                            <div class="col">
+                                                <input type="text" name="couponcode" id="" class="form-control" style="height:57px">
+                                            </div>
+                                            <div class="col">
+                                                <button type="submit" class="theme-btn-1 btn btn-effect-1">Apply</button>
+                                            </div>
+                                        </div>                                           
+                                        </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><strong>Order Total</strong></td>
+                                    <td class="text-right"><strong>Rs. {{request|finaltotal|floatformat:2}}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-wrapper text-right">
+                            <form action="{% url 'makepayment' %}" method="POST" class="d-block">
+                                {% csrf_token %}
+                                <input type="text" hidden="hidden" name="orderamt" value="{{request|carttotal}}" id="">
+                                <div class="d-grid">
+                                    <button type="submit" class="theme-btn-1 btn btn-effect-1 mt-2 float-right">Proceed To Checkout</button>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SHOPING CART AREA END -->
+{% endif %}
+{% endblock content %}
+
+
+{% if products.count == 0  %}
+    <div class="container ro p-4 bg-lgreen shdw2 m-auto mt-2 fs-4">
+Hey! Looks like there is nothing in your cart yet. 
+</div>
+{% endif %}
+<div class="row p-4">
+    <div class="col-12 col-lg-9">
+        {% if products.count == 0 %}
+        
+        {% else %}
+        
+        <form method="POST" class="p-4  rounded mb-2 shdw1 lh-lg">
+            {% csrf_token %}
+            <h5 class="fw-bold mb-3">Select Shipping Address</h5>
+            <fieldset id="group1">
+                {% for address in addresses  %}
+                {% if address.id == addressid  %}
+                <input type="radio" value=" {{address.id}}" name="group1" checked="true"><b> {{address.contactPerson}}, </b>
+                {{address.address1}},{{address.address2}},
+                {{address.state|hyphenurl}} - {{address.pinCode}},
+                {{address.landMark}},
+                Contact Number: {{address.contactNumber}}               
+                <a href="{% url 'address' address.id %}" class="text-secondary text-decoration-none">Edit
+                </a>       
+                <br/>       
+                {% elif address.is_primary and addressid is None %}
+                <input type="radio" value=" {{address.id}}" name="group1" checked="true"><b> {{address.contactPerson}}, </b>
+                {{address.address1}},{{address.address2}},
+                {{address.state|hyphenurl}} - {{address.pinCode}},
+                {{address.landMark}},
+                Contact Number: {{address.contactNumber}}               
+                |<a href="{% url 'address' address.id %}" class="text-secondary text-decoration-none">Edit
+                </a>     
+                <br/>         
+                {% else %}
+              <input type="radio" value=" {{address.id}}" name="group1"><b> {{address.contactPerson}}, </b>
+                {{address.address1}},{{address.address2}},
+                {{address.state|hyphenurl}} - {{address.pinCode}},
+                {{address.landMark}},
+                Contact Number: {{address.contactNumber}}               
+                |<a href="{% url 'address' address.id %}" class="text-secondary text-decoration-none">Edit
+                </a>
+                <br/>              
+                {% endif %}
+            
+                {% endfor %}
+               
+              <a href="{% url 'address' %}" class="btn bg-green mt-3">
+                  <i class="fas fa-plus"></i> Add a new address
+              </a>
+              {% if addresses.count != 0 %}
+              <button class="btn btn-warning mt-3">Use this address</button>
+              {% endif %}
+              
+            </fieldset>
+        </form>
+    
+        
+        
+        
+
+       
+        {% for product in products  %}
+        <div class="row  shdw1 m-0 p-2">
+            <div class="col-3 p-0" style="align-self:center;">
+                {% thumbnail '128x128' product|primaryimage -- class="rounded img-fluid" %}</div>
+            <div class="col-12 col-lg-6 p-0 mt-2">
+                <b class="text-success h4">{{product.productName}} </b>
+
+                <p class="fs-small m-0">
+                    Size: {{product.size}} 
+                </p>
+                <p class="fs-small m-0">
+                    {{product.season}}
+                </p>
+                <p class="m-0 text-success fw-bold">
+                    ₹ {{product.productSalePrice|floatformat:2}}
+                    <span class="fs-small text-danger text-decoration-line-through">₹
+                        {{product.productMRP|floatformat:2}}</span>
+                </p>
+            </div>
+            <div class="col-12 col-lg-3 p-3">
+                <b class="fs-small">Update Quantity</b>
+                <form action="{% url 'updatecart' product.id %}" method="GET" class="d-inline">
+                <div class="input-group">
+                <button class="btn-outline-danger btn fw-bold border-end-0 fs-6 subq" ><i class="fa fa-minus"></i></button>
+                <input type="text" name="qn" min="1" max="10" value="{{product.id|cartquantity:request}}" class="form-control border-dark text-center" style="max-width:50px;">
+                <button class="btn-outline-success btn fw-bold fs-6 border-start-0 addq"><i class="fa fa-plus"></i></button>                
+                </div>
+                <button type="submit" class="btn btn-success btn-sm mt-2 text-light">Update</button>
+                </form>
+
+                <form action="{% url 'removefromcart' product.id %}" method="GET" class="d-inline">                    
+                    <button class="btn btn-danger btn-sm mt-2 text-light">Remove</button>
+                </form>
+                
+                
+            </div>
+        </div>
+        {% endfor %}
+      
+        
+      
+
+    </div>
+    <div class=" shdw1 col-12 col-lg-3 p-4">
+        <p class="h5 fw-bold">Cart Total: {{request.session.cart.keys|length}} item(s)</p>
+        <hr>
+        <table class="table table-borderless">
+            <tr>
+                <td class="text-start fw-bold"> Sub Total</td>
+                <td class="text-end fw-bold">₹ {{request|cartvalue|floatformat:2}}</td>
+            </tr>
+            
+            {% if request|discountamt != 0 %}
+            <tr>
+                <td class="text-start fw-bold"> Discount:</td>
+                <td class="text-end fw-bold">
+                   
+                 
+                    {{request|discountamt|floatformat:2}}
+                 
+
+                </td>
+            </tr>
+            {% endif %}
+
+            <tr>
+                <td class="text-start fw-bold h5"> Totals</td>
+                <td class="text-end fw-bold h5">₹ {{request|finaltotal|floatformat:2}}</td>
+            </tr>
+
+            <tr>
+                <td class="text-start fw-bold"> Taxes</td>
+                <td class="text-end fw-bold">₹ {{products|TaxAmt:request|floatformat:2}}</td>
+            </tr>
+            <tr>
+                <td colspan=2>
+                    <hr class="p-0 m-0 mb-2">
+
+                    {% if request|discountamt != 0 %}                    
+                    <form action="{% url 'removecoupon' %}">
+                        Coupon: <b>{{couponcode}}</b>
+                        <button class="btn btn-sm float-end">[Remove]</button>                        
+                        </form>
+                    {% else %}
+                    <h6 class="fw-bold">Have a Coupon?</h6>
+                    <form action="{% url 'applycoupon' %}" class="d-inline">   
+                        <input type="text" name="couponcode" id="" class="form-control border-secondary float-start" style="max-width: 180px;">
+                        <button type="submit" class="btn bg-green text-light mt-0 float-end">Apply</button>
+                    </form>
+                    {% endif %}
+
+                </td>
+            
+            </tr>
+
+        </table>
+
+        <form action="{% url 'makepayment' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" hidden="hidden" name="orderamt" value="{{request|carttotal}}" id="">
+            <div class="d-grid">
+                <button class="mt-0 btn bg-green text-light fw-bold text-center">Proceed To Checkout</button>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+{% endif %}
+
+{% block scripts %}
+<script>    
+    $( ".subq" ).click(function( event ) {
+        event.preventDefault();
+        var q = $(this).next()[0].value
+        if(parseInt(q) > 1)
+        {
+            $(this).next()[0].value = parseInt(q) - 1
+        }
+       
+        
+      });
+
+      $( ".addq" ).click(function( event ) {
+        event.preventDefault();
+        var q = $(this).prev()[0].value
+        if(parseInt(q) < 10)
+        {
+            $(this).prev()[0].value = parseInt(q) + 1            
+        }
+        
+      });
+
+</script>
+{% endblock scripts %}

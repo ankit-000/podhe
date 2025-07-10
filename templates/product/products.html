@@ -1,0 +1,64 @@
+{% extends 'design.html' %}
+{% load static %}
+{% load imagekit %}
+{% load csswidgets %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row m-auto">
+        <div class="col-1 col-md col-lg"></div>
+        <div class="col-10 col-lg-8 p-0 my-5">
+            <div class="row m-0">   
+                <div class="col-12 col rounded shdw1 text-center  p-0 m-2 d-grid">                    
+                    <div class="align-self-center fs-xxlarge"><a href="{% url 'addproduct' %}" class="text-decoration-none txt-green">
+                     <i class="fas fa-plus-circle"></i>
+                    </a></div>  
+             </div>
+
+                {% for product in products  %}
+                <div class="col-12 col-lg-4 rounded shdw1  m-2 p-3">
+                    <p class="fs-small m-0 p-0">{{product.category}}
+                    {% if product.is_live %}
+                       <span class="float-end bg-green rounded d-inline-block text-light fw-bold p-2">                          
+                           Live
+                        </span>
+                           {% else %}
+                        <span class="float-end bg-warning rounded d-inline-block text-light fw-bold p-2">                          
+                            Pending
+                         </span>
+                           {% endif %}
+                     
+                    </p>                   
+                    <h4 class="">{{product.productName}}</h4>  
+                    <span class="fw-bold h4">Rs. {{product.productSalePrice|floatformat:2}}</span>                  
+                    <span class="fw-bold h6 text-decoration-line-through">Rs.{{product.productMRP|floatformat:2}}</span>  
+                    <span class="d-block">Tax Rate: {{product.taxPercent|floatformat:2}}%</span>
+                    <hr/>
+                    <h6 class="fw-bold text-center">{{product.totalUnitsSold}} Units Sold</h6>
+                    <hr/>
+                    <a href="{% url 'addproduct' product.id %}" class="btn btn-outline-secondary d-inline-block mt-2">Update</a> 
+                    <form action="{% url 'deleteproduct' product.id %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger mt-2">Delete</button>
+                    </form>                   
+                    <a href="{% url 'addmedia' product.id %}" class="btn btn-outline-success d-inline-block mt-2">Add Pics</a> 
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="tab-content">
+                <div class="tab-pane fade active show" id="liton_tab_1_1">
+                </div>
+                {% endfor %}
+               
+            </div>
+        </div>
+        <div class="col-1 col-md col-lg"></div>
+    </div>
+</div>
+
+
+{% endblock content %}
+

@@ -1,0 +1,26 @@
+{% autoescape off %}
+
+<body style="background-color:#FFFFFF;font-family:Arial;">
+<div style="border:1px solid #999;border-radius:3px;margin:auto;padding:50px;max-width:600px;">
+
+<p style="margin-top:10px;">Dear {{ mailto }},</p>
+
+<p style="margin-top:25px;">Thank you for registering on {{website|lower}}</p>
+
+<p style="margin-top:25px;">We aim to provide ease of access and door step delivery of all your gardening needs.</p>
+
+<p style="margin-top:25px;"><a style="padding:10px; border-radius:3px;background-color:rgb(100,100,255);color:#FFF;text-decoration:none;font-weight:bold" href="http://{{ domain }}{% url 'activateaccount' uidb64=uid token=token %}">Activate My Account</a></p>
+
+<p style="margin-top:25px;">If the link above is not working for you, kindly copy and paste the code below in your brower to activate your account:-</p>
+
+http://{{ domain }}{% url 'vendor:activateaccount' uidb64=uid token=token %}
+
+<p style="margin-top:25px;">With best regards,<br/>
+{{repname }} 
+</p>
+
+
+</div>
+</body>
+
+{% endautoescape %}

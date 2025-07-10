@@ -1,0 +1,167 @@
+{% extends 'design.html' %}
+{% load imagekit %}
+{% load customwidgets %}
+
+{% block title1 %}Make Payment{% endblock %}
+{% block title2 %}Make Payment{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1><b>Checkout</b></h1>
+    <div class="row p-0 m-0">
+        <div class="col-lg-12 bg-light border rounded p-4 shdw2 mb-3">
+            <h5 class="fw-bold">Shipping Address</h5>
+            <hr class="p-0 m-0 mb-1">
+            <span class="fw-bold"><b>Contact Person:</b> </span>{{address.contactPerson}}<br/>
+            <span class="fw-bold"><b>Address: </b></span>{{address.address1}},{{address.address2}},{{address.city}},
+            {{address.state|hyphenurl}} - {{address.pinCode}} <br/>
+            <span class="fw-bold"><b>LandMark:</b> {{address.landMark}}</span><br/>                
+            <span class="fw-bold"><b>Contact Number:</b> </span> {{address.contactNumber}}               
+        </div>
+    </div>
+
+<div class="row mb-3 justify-content-around">
+    <div class="col-lg-6 border bg-light rounded m-3">
+        <div class="p-3">
+            <h4 class="title-2 mb-1">Cart Totals</h4>
+            <table class="table">
+                <tbody>
+                    {% for p in products  %}
+                    <tr>
+                        <td>{{p.productName}} <strong>× {{p.id|cartquantity:request}}</strong></td>
+                        <td>Rs. {{p.id|producttotal:request}}</td>
+                    </tr>
+                    {% endfor %}                   
+                 
+                    <tr>
+                        <td><strong>Order Total</strong></td>
+                        <td><strong>Rs. {{request|finaltotal|floatformat:2}}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="rounded border bg-light p-3">
+            <h4 class="title-2 mb-1">Payment Summary</h4>
+            <hr class="p-o m-1">
+            <div class="p-3 pb-0">
+            <h5>
+                <table class="table table-borderless">
+                    <tr>
+                        <td class="text-start fw-bold">Payble Amount</td>
+                        <td class="text-end fw-bold">Rs. {{request|finaltotal|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start fw-bold h6">Tax Amt (included)</td>
+                        <td class="text-end fw-bold h6">Rs. {{products|TaxAmt:request|floatformat:2}}</td>
+                    </tr>
+                </table>
+                 
+            </h5>  
+            <div class="text-right">
+                <button type="submit" id="rzbtn" class="btn theme-btn-1 text-light fw-bold  mt-2 mb-4">Place Order</button>
+            </div>      
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
+
+{% for product in products  %}
+{% thumbnail '100x100' product|primaryimage %}
+{{product.productName}}
+{{product.productSalePrice}}
+Quantity: {{product.id|cartquantity:request}}
+{% endfor %}
+total order amount
+{{request|carttotal}}
+
+ <div class="d-grid">
+    <button type="submit" id="rzbtn" class="btn rounded shdw1 bg-green btn-block mt-2 mb-4">Make Payment</button>
+ </div>
+
+
+{% block scripts %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{key}}", // Enter the Key ID generated from the Dashboard
+        "name": "Podhewale",
+        "order_id": "{{orderid}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "callback_url": "{{surl}}",
+        "prefill": {
+            "name": "{{username}}",
+            "email": "{{useremail}}",
+            "contact": "{{contactno}}"
+        },
+        "notes":{
+            "coupon": "{{coupon}}",
+            "orderamt":"{{orderamt}}",
+            "addressid":"{{addressid}}"
+        },
+        "theme": {
+            "color": "#95c83d"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzbtn').onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+{% endblock scripts %}
+<div class="row p-3">
+    <div class=" col-12 rounded h-100 mb-3">
+        <div class="table-responsive rounded">
+        <table class="table text-center p-0 m-0 table-borderless table-hover">
+            <thead class="bg-green">
+            <tr class="text-light">
+                <th class="p-4 bg-green">Product Name</th>
+                <th class="p-4 bg-green">Per Unit Price</th>
+                <th class="p-4 bg-green">Quantity in Cart</th>
+                <th class="p-4 bg-green">Total Tax</th>
+                <th class="p-4 bg-green">Total Amount</th>
+            </tr>
+        </thead>
+            {% for p in products  %}
+            <tr class="bg-info">                
+                <td>{{p.productName}}</td>
+                <td>Rs. {{p.productSalePrice|floatformat:2}}</td>
+                <td>{{p.id|cartquantity:request}}</td>
+                <td>Rs. {{p|Tax:request|floatformat:2}}</td>
+                <td>Rs. {{p|cartproducttotal:request|floatformat:2}}</td>                
+            </tr>    
+            
+            {% endfor %}
+        </table>
+    </div>
+        
+    </div>    
+    <div class="col-12 col-lg-3 shdw2 rounded p-0 h-100">
+        <h4 class="bg-green text-light p-4 rounded-top">Payment Summary</h4>
+        <div class="p-3 pb-0">
+        <h5>
+            <table class="table table-borderless">
+                <tr>
+                    <td class="text-start fw-bold">Payble Amount</td>
+                    <td class="text-end fw-bold">Rs. {{request|carttotal|floatformat:2}}</td>
+                </tr>
+                <tr>
+                    <td class="text-start fw-bold h6">Tax Amt (included)</td>
+                    <td class="text-end fw-bold h6">Rs. {{products|TaxAmt:request|floatformat:2}}</td>
+                </tr>
+            </table>
+             
+        </h5>  
+        <div class="d-grid">
+            <button type="submit" id="rzbtn" class="btn rounded bg-green text-light fw-bold btn-block mt-2 mb-4">Make Payment</button>
+        </div>      
+        </div>
+    </div>
+
+   
+</div></div>

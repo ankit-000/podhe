@@ -1,0 +1,299 @@
+{% load static %}
+{% load customwidgets %}
+
+<div class="container-fluid p-0">
+  {% comment %} <div class="container">
+
+    <div class="row text-lg-start pb-2">
+
+      <div class="col-12 col-lg-2">
+        <a href="{% url 'home' %}" class="text-decoration-none text-black">
+          <img class="img-fluid  mt-1" src="{% static 'assets/logo.png' %}" width="140px" alt="">
+
+        </a>
+      </div>
+
+      <div class="col-12 col-lg">
+        <form action="{% url 'search' %}" class="searchgroup" style="z-index:1;">
+          <div class="input-group">
+            <input type="text" class="form-control searchbox" name="search">
+            <button type="submit" class="btn bg-green"><i class="fa fa-search"></i></button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-12 col-lg searchgroup">
+
+        <div class="float-start mt-0 see" style="top:-3px;">
+
+          <form action="{% url 'pinproducts' %}" method="GET" class="" style="top:-20px; display:block;">
+            <div class="input-group">
+              <span class="form-control border-0  me-1 fw-bold" style="padding-top:7px;">Pincode:</span>
+              {% if request|pinvalue == False %}
+              <input type="text" name="filterpincode" id="pinbox" readonly class="form-control-plaintext" value="All"
+                style="width:20px;">
+              {% else %}
+              <input type="text" name="filterpincode" id="pinbox" readonly class="form-control-plaintext rounded"
+                value="{{request|pinvalue}}" style="width:55px;">
+              {% endif %}
+              <a class="btn-link btn mt-0 ms-0 ps-1 pe-0 text-decoration-none" id="pinbtn"
+                onclick="showform()">Change</a>
+              <button type="submit" id="pinsubmit" class="btn bg-green text-dark mt-0 me-0 text-decoration-none"
+                hidden="hidden">Change</button>
+
+            </div>
+          </form>
+
+        </div>
+
+
+
+
+        {% if user.is_anonymous %}
+        <div class="float-start shdw2 me-2 bo">
+          <a href="{% url 'login' %}" class="btn bg-green fw-bold" style="padding:3px 5px;">Login</a>
+        </div>
+        <div class="float-start shdw2 me-2">
+          <a href="{% url 'signup' %}" class="btn bg-green fw-bold" style="padding:3px 5px;">Signup</a>
+        </div>
+        {% elif user.is_customer %}
+
+        <div class="dropdown float-start shdw2 me-2">
+          <a class="btn bg-secondary text-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            My Account
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item fs-small" href="{% url 'profile' %}">Profile</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'myaddresses' %}">Addresses</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'wishlist' %}">Wishlist</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'orders' %}">Orders</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'changepassword' %}">Change Password</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'logout' %}">Sign Out</a></li>
+          </ul>
+        </div>
+        {% elif user.is_vendor %}
+        <div class="dropdown float-start shdw2 me-2">
+          <a class="btn bg-secondary text-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            My Account
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:dashboard' %}">Dashboard</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'products' %}">Manage Products</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:orders' %}">Manage Orders</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:profile' %}">Profile</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:address' %}">Address</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:bankdetails' %}">Bank Details</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:changepassword' %}">Change Password</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:logout' %}">Sign Out</a></li>
+          </ul>
+        </div>
+
+
+        {% endif %}
+        {% if user.is_anonymous or user.is_customer %}
+        <a href="{% url 'cartsummary' %}" class="btn bg-green position-relative shdw2" style="padding:3px 5px;">
+          <i class="fas fa-shopping-cart"></i>
+          
+          <span
+            class="p-1 bg-light rounded-3 flost fw-bold ms-1 text-success">{{request.session.cart.keys|length}}</span>
+        </a>
+        {% endif %}
+
+      </div>
+
+    </div>
+
+
+
+    
+  </div>
+  <div class="container-fluid p-0">
+
+    <div class="row m-auto px-5 categories text-center container p-0">
+
+      {% for category in categories  %}
+      <div class="col-2">
+        <a href="{% url 'category' category.categoryName %}">
+          <div class="py-2 text-center rounded">
+            <img src="{{category.categoryImage.url}}" alt="Flower Vase" class="img-fluid">
+            <span class="d-block  pt-2 fw-bold">{{category.categoryName}}</span>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+
+    </div>
+
+
+  </div> {% endcomment %}
+
+
+
+</div>
+
+
+<nav class="navbar navbar-expand-lg container">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img class="img-fluid  mt-1" src="{% static 'assets/logo.png' %}" width="140px" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="border-0"><i class="fas fa-bars"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="col-12 col-lg">
+        <form action="{% url 'search' %}" class="searchgroup" style="z-index:1;">
+          <div class="input-group">
+            <input type="text" class="form-control searchbox" name="search">
+            <button type="submit" class="btn bg-green"><i class="fa fa-search"></i></button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-12 col-lg searchgroup">
+
+        <div class="float-start mt-0 see" style="top:-3px;">
+
+          <form action="{% url 'pinproducts' %}" method="GET" class="" style="top:-20px; display:block;">
+            <div class="input-group">
+              <span class="form-control border-0  me-1 fw-bold" style="padding-top:7px;">Pincode:</span>
+              {% if request|pinvalue == False %}
+              <input type="text" name="filterpincode" id="pinbox" readonly class="form-control-plaintext" value="All"
+                style="width:20px;">
+              {% else %}
+              <input type="text" name="filterpincode" id="pinbox" readonly class="form-control-plaintext rounded"
+                value="{{request|pinvalue}}" style="width:55px;">
+              {% endif %}
+              <a class="btn-link btn mt-0 ms-0 ps-1 pe-0 text-decoration-none" id="pinbtn"
+                onclick="showform()">Change</a>
+              <button type="submit" id="pinsubmit" class="btn bg-green text-dark mt-0 me-0 text-decoration-none"
+                hidden="hidden">Change</button>
+
+            </div>
+          </form>
+
+        </div>
+
+
+
+
+        {% if user.is_anonymous %}
+        <div class="float-start me-5">
+          <a href="{% url 'login' %}" class="text-decoration-none text-black">
+            <i class="fas fa-user cicon bg-green"></i>
+            <span class="d-block">Login</span>
+          </a>
+        </div>
+        <div class="float-start me-5">
+          <a href="{% url 'signup' %}" class="text-decoration-none text-black">
+            <i class="fas fa-user cicon bg-green"></i>
+            <span class="d-block">SignUp</span>
+          </a>
+        </div>
+        {% elif user.is_customer %}
+
+        <div class="dropdown float-start shdw2 me-2">
+          <a class="btn bg-secondary text-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            My Account
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item fs-small" href="{% url 'profile' %}">Profile</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'myaddresses' %}">Addresses</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'wishlist' %}">Wishlist</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'orders' %}">Orders</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'changepassword' %}">Change Password</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'logout' %}">Sign Out</a></li>
+          </ul>
+        </div>
+        {% elif user.is_vendor %}
+        <div class="dropdown float-start shdw2 me-2">
+          <a class="btn bg-secondary text-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            My Account
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:dashboard' %}">Dashboard</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'products' %}">Manage Products</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:orders' %}">Manage Orders</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:profile' %}">Profile</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:address' %}">Address</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:bankdetails' %}">Bank Details</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:changepassword' %}">Change Password</a></li>
+            <li><a class="dropdown-item fs-small" href="{% url 'vendor:logout' %}">Sign Out</a></li>
+          </ul>
+        </div>
+
+
+        {% endif %}
+        {% if user.is_anonymous or user.is_customer %}
+        <div class="float-start me-3">
+        <a href="{% url 'cartsummary' %}" class="text-decoration-none text-black">          
+            <i class="fas fa-shopping-cart cicon bg-green"></i>
+            <span class="d-block text-center">Cart</span>
+            {% comment %} <span class="d-block">{{request.session.cart.keys|length}}</span> {% endcomment %}
+        </a> 
+      </div>
+        {% endif %}
+
+      </div>
+      
+    </div>
+  </div>
+  <br/>
+    
+</nav>
+<div class="row m-auto px-5 categories text-center container p-0">
+
+  {% for category in categories  %}
+  <div class="col-2">
+    <a href="{% url 'category' category.categoryName %}">
+      <div class="py-2 text-center rounded">
+        <img src="{{category.categoryImage.url}}" alt="Flower Vase" class="img-fluid">
+        <span class="d-block  pt-2 fw-bold">{{category.categoryName}}</span>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+
+</div>
+
+
+{% block scripts %}
+<script>
+  function unhideform() {
+    $("#addpinbox").attr("hidden", "hidden")
+    $("#pinbox").removeAttr("hidden")
+  }
+</script>
+
+<script>
+  function showform() {
+
+    $("#pinbox").removeAttr("readonly")
+    $("#pinbox").removeClass("form-control-plaintext")
+    $("#pinbox").addClass("form-control")
+    $("#pinbox").removeAttr("style")
+    $("#pinbox").val("")
+    $("#pinbox").attr("style", "max-width:100px;")
+    $("#pinbtn").attr("hidden", "hidden")
+    $("#pinsubmit").removeAttr("hidden")
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+{% endblock scripts %}

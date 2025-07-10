@@ -1,0 +1,694 @@
+{% extends 'design.html' %} 
+{% load static %} 
+{% load imagekit %} 
+{% load customwidgets %}
+
+
+<link rel="stylesheet" href="{% static 'css/slick.css' %}">
+<link rel="stylesheet" href="{% static 'css/slick-theme.css' %}">
+{% block content %} 
+
+<!-- SLIDER AREA START (slider-3) -->
+ <div>
+<div class="ltn__slider-area ltn__slider-3 section-bg-1">
+  <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1">
+    <!-- ltn__slide-item -->
+     <!--Slider 1-->
+    <div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3 ltn__slide-item-3-normal bg-image" data-bg="{% static 'slider/1.jpg' %}">
+      <div class="ltn__slide-item-inner">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 align-self-center">
+              <div class="slide-item-info">
+                <div class="slide-item-info-inner ltn__slide-animation">
+                  <div class="slide-video mb-50 d-none">
+                    <a class="ltn__video-icon-2 ltn__video-icon-2-border" href="https://www.youtube.com/embed/ATI7vfCgwXE?autoplay=1&showinfo=0" data-rel="lightcase:myCollection">
+                      <i class="fa fa-play"></i>
+                    </a>
+                  </div>
+                  <h6 class="slide-sub-title animated">
+                    <img src="{% static 'img/icons/icon-img/1.png'%}" alt="#" /> 100% genuine
+                    Products
+                  </h6>
+                  <h1 class="slide-title animated">
+                    Our Store's Most <br />
+                    Favorite Plants
+                  </h1>
+                  <div class="slide-brief animated">
+                    <p>
+                        Green Dreams Begin Here.
+                    </p>
+                  </div>
+                  <div class="btn-wrapper animated">
+                    <a href="{% url 'allproducts' %}" class="theme-btn-1 btn btn-effect-1 text-uppercase">Explore Products</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ltn__slide-item -->
+     <!--Slider 2-->
+    <div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3 ltn__slide-item-3-normal bg-image" data-bg="{% static 'slider/2.jpg' %}">
+      <div class="ltn__slide-item-inner text-right">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 align-self-center">
+              <div class="slide-item-info">
+                <div class="slide-item-info-inner ltn__slide-animation">
+                  <h6 class="slide-sub-title ltn__secondary-color animated">
+                    "Act Fast, Nature's Treasures Await"
+                  </h6>
+                  <h1 class="slide-title animated">
+                    Premium & Luxurious <br />
+                    Plants
+                  </h1>
+                  <div class="slide-brief animated">
+                    <p>
+                        Nature's Embrace, Delivered to Your Doorstep.
+                    </p>
+                  </div>
+                  <div class="btn-wrapper animated">
+                    <a href="{% url 'allproducts' %}"class="theme-btn-1 btn btn-effect-1 text-uppercase">Explore Products</a>
+                    <a href="{% url 'aboutus' %}" class="btn btn-transparent btn-effect-3">LEARN MORE</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--ltn__slide-item-->
+ <!--Slider 3-->
+<div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3 ltn__slide-item-3-normal bg-image" data-bg="{% static 'slider/3.jpg' %}">
+  <div class="ltn__slide-item-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 align-self-center">
+          <div class="slide-item-info">
+            <div class="slide-item-info-inner ltn__slide-animation">
+              <h6 class="slide-sub-title animated">
+                    <img src="{% static 'img/icons/icon-img/1.png'%}" alt="#" /> 100% genuine
+                    <!--Products-->
+                  </h6>
+                  <h1 class="slide-title animated">
+                        Our Store's Most <br />
+                    Favorite Plants
+                  </h1>
+                  <div class="slide-brief animated">
+                    <p>
+                        Green Dreams Begin Here.
+                    </p>
+                  </div>
+                  <div class="btn-wrapper animated">
+                    <a href="{% url 'allproducts' %}" class="theme-btn-1 btn btn-effect-1 text-uppercase">Explore Products</a>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- ltn__slide-item -->
+     <!--Slider 4-->
+     
+<div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3 ltn__slide-item-3-normal bg-image" data-bg="{% static 'slider/4.jpg' %}">
+      <div class="ltn__slide-item-inner text-right">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 align-self-center">
+              <div class="slide-item-info">
+                <div class="slide-item-info-inner ltn__slide-animation">
+                  <h6 class="slide-sub-title ltn__secondary-color animated">
+                    "Act Fast, Nature's Treasures Await"
+                  </h6>
+                  <h1 class="slide-title animated">
+                    Premium & Luxurious <br />
+                    Plants
+                  </h1>
+                  <div class="slide-brief animated">
+                    <p>
+                        Nature's Embrace, Delivered to Your Doorstep.
+                    </p>
+                  </div>
+                  <div class="btn-wrapper animated">
+                    <a href="{% url 'allproducts' %}"class="theme-btn-1 btn btn-effect-1 text-uppercase">Explore Products</a>
+                    <a href="{% url 'aboutus' %}" class="btn btn-transparent btn-effect-3">LEARN MORE</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+   </div> 
+ </div>
+</div>
+</div>
+
+<!-- Include jQuery and Slick Slider -->
+<!-- Include required JS/CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link rel="stylesheet" href="{% static 'css/slick.css' %}" />
+<link rel="stylesheet" href="{% static 'css/slick-theme.css' %}" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/slick.min.js' %}"></script>
+
+<script>
+  $(document).ready(function () {
+    // Homepage slider
+    $('.ltn__slide-one-active').slick({
+      autoplay: true,
+      autoplaySpeed: 3000,
+      arrows: false,
+      dots: true,
+      fade: false,
+      speed: 600,
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      pauseOnHover: false,
+      pauseOnFocus: false,
+    });
+
+    // Category slider
+    $('.ltn__category-slider-active').slick({
+      infinite: true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      autoplay: false,
+      autoplaySpeed: 20000,
+      arrows: true,
+      dots: true,
+      prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
+      nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>',
+      responsive: [
+        {
+          breakpoint: 992,
+          settings: { slidesToShow: 3 }
+        },
+        {
+          breakpoint: 768,
+          settings: { slidesToShow: 2 }
+        },
+        {
+          breakpoint: 576,
+          settings: { slidesToShow: 1 }
+        }
+      ]
+    });
+  });
+</script>
+
+<!-- Custom CSS for arrows -->
+<style>
+  .slick-prev,
+  .slick-next {
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    line-height: 40px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .slick-prev:hover,
+  .slick-next:hover {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+  }
+
+  .slick-prev {
+    left: -20px;
+  }
+
+  .slick-next {
+    right: -20px;
+  }
+
+  .slick-prev::before,
+  .slick-next::before {
+    font-size: 20px;
+    color: white;
+  }
+</style>
+
+
+
+
+</div>
+
+
+
+<!-- SLIDER AREA END -->
+ 
+<!-- BANNER AREA START -->
+<div class="ltn__banner-area mt-120 mb-90">
+    <div class="container">
+        <div class="row ltn__custom-gutter--- justify-content-center">
+            <div class="col-lg-6 col-md-6">
+                <div class="ltn__banner-item">
+                    <div class="ltn__banner-img">
+                        <a href="shop.html"><img src="{% static 'img/banner/1.jpg' %} " alt="Banner Image"/></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ltn__banner-item">
+                            <div class="ltn__banner-img">
+                                <a href="shop.html"><img src="{% static 'img/banner/2.jpg' %} " alt="Banner Image"/></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="ltn__banner-item">
+                            <div class="ltn__banner-img">
+                                <a href="shop.html"><img src="{% static 'img/banner/3.jpg' %} " alt="Banner Image"/></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BANNER AREA END -->
+
+ <!-- CATEGORY AREA START -->
+ <div class="ltn__category-area section-bg-1-- ltn__primary-bg before-bg-1 bg-image bg-overlay-theme-black-5--0 pt-115 pb-90" data-bg="{% static 'img/bg/1.jpg' %} ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area ltn__section-title-2 text-center">
+                    <h1 class="section-title white-color">Categories</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row ltn__category-slider-active slick-arrow-1">
+            {% for category in categories  %}
+            <div class="col-12">
+                <div class="ltn__category-item ltn__category-item-3 text-center">
+                    <div class="ltn__category-item-img">
+                        <a href="{%url 'category' category.categoryName %}">
+                            <img src="{% static 'img/icons/icon-img/' %}{{category.categoryName}}.png" alt="Image">
+                        </a>
+                    </div>
+                    <div class="ltn__category-item-name">
+                        <h5><a href="{%url 'category' category.categoryName %}">{{category.categoryName}}</a></h5>
+                        <h6>({{category.categoryName|productsincategory}})</h6>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            
+            </div>
+           </div>
+        </div>
+    </div>
+</div>
+<!-- CATEGORY AREA END -->
+
+
+
+
+
+
+
+<!-- PRODUCT TAB AREA START (product-item-3) -->
+<div class="ltn__product-tab-area ltn__product-gutter pt-115 pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area ltn__section-title-2 text-center">
+                    <h1 class="section-title">Our Products</h1>
+                </div>
+                <div class="ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase text-center">
+                    <div class="nav">
+                        {% for category in categories %} 
+                            {% if forloop.counter == 1 %}
+                                <a class="active show" data-toggle="tab" href="#liton_tab_3_{{forloop.counter}}">{{category}}</a>
+                            {% else %}
+                                <a class="" data-toggle="tab" href="#liton_tab_3_{{forloop.counter}}">{{category}}</a>
+                            {% endif %} 
+                        {% endfor %}
+                      </div>
+                </div>
+
+
+
+
+                <div class="tab-content">
+                    {% for category in categories %} 
+                        {% if forloop.counter == 1 %}
+                            <div  class="tab-pane fade active show" id="liton_tab_3_{{forloop.counter}}">
+                        {% else %}
+                            <div class="tab-pane fade" id="liton_tab_3_{{forloop.counter}}">
+                        {% endif %}
+                                <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
+                                    {% for product in products|selectedcategory:category  %}
+                                        <!-- ltn__product-item -->
+                                        <div class="col-lg-12">
+                                            <div class="ltn__product-item ltn__product-item-3 text-center">
+                                                <div class="product-img">
+                                                    <a href="{% url 'details' product.id %}">{% thumbnail '280x330' product|primaryimage -- class="mb-2 img-fluid" %}</a>
+                                                    <div class="product-badge">
+                                                        <ul>
+                                                            <li class="sale-badge">{{product|MRPdiscount}}</li>
+                                                        </ul>
+                                                    </div>
+                                                    
+                                                    <div class="product-hover-action">
+                                                        <ul>
+                                                            <li>
+                                                                {% comment %} <button class="btn-link rounded-circle p-0 m-0 modalbtn" href="#" title="Quick View" data-toggle="modal" data-target="#quick_view_modal" value="{{product.id}}"> {% endcomment %}
+                                                                    <a class="btn-link rounded-circle p-0 m-0 modalbtn" href="{% url 'details' product.id %}" title="Quick View">
+                                                                    <i class="far fa-eye p-3"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                              <form class="d-inline-block" action="{% url 'addtocart' %}" >
+                                                                <input type="text" hidden="hidden" name="pid" id="pid" value={{product.id}}>
+                                                                <button type="submit" class="btn-link rounded-circle p-0 m-0"><i class="fas fa-shopping-cart p-3 border-none"></i></button>
+                                                              </form>
+                                                              
+                                                            </li>
+                                                            <li>
+                                                              <form action="{% url 'addtowishlist' product.id %}" class="d-inline" > 
+                                                                <button type="submit" class=" btn-link rounded-circle p-0 m-0"><i class="far fa-heart p-3"></i></button>
+                                                            </form>
+                                                                
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+
+
+                                                </div>
+                                                <div class="product-info">
+                                                    <div class="product-ratting">
+                                                        <ul>
+                                                            <li><div data-rating-value="{{product|avgrating}}" class="fs-xlarge" data-rating-stars="5" data-rating-readonly="true" data-rating-half="true" ></div></li>                                                                           
+                                                            <li class="review-total"> <a href="#"> {{product|reviewsCount}}</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <h2 class="product-title">
+                                                        <a href="{% url 'details' product.id %}">{{product.productName}}</a></h2>
+                                                    <div class="product-price">
+                                                        <span>Rs. {{product.productSalePrice}}</span>
+                                                        <del>Rs. {{product.productMRP}}</del>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modalinfo d-none">
+                                                <p class="pimg">{% thumbnail '280x330' product|primaryimage -- class="mb-2 img-fluid" %}</p>
+                                                <p class="pname">{{product.productName}}</p>
+                                                <p class="prating">{{product|avgrating}}</p>
+                                                <p class="previews">{{product|reviewsCount}}</p>
+                                                <p class="psaleprice"> {{product.productSalePrice}}</p>
+                                                <p class="pmrp"> {{product.productMRP}}</p>
+                                                <p class="pdesc"> {{product.productDescription|characters}}</p>
+                                                <p class="prodid"> {{product.id}}</p>
+                                                {% comment %} <p class="pwish">{% url 'addtowishlist' product.id %}</p> {% endcomment %}
+    
+                                            </div>
+                                            
+                                        </div>                                
+                                        <!--  -->
+                                       
+                                     
+                                        
+                                        
+                                    {% endfor %}
+
+                                </div>
+
+
+                            </div>
+                    {% endfor %}
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PRODUCT TAB AREA END -->
+
+
+
+
+
+
+
+
+
+
+<!-- COUNTER UP AREA START -->
+<div class="ltn__counterup-area bg-image bg-overlay-theme-black-80 pt-115 pb-70" data-bg="{% static 'img/icons/5.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 align-self-center">
+                <div class="ltn__counterup-item-3 text-color-white text-center">
+                    <div class="counter-icon"> <img src="{% static 'img/icons/icon-img/2.png' %}" alt="Image"> </div>
+                    <h1><span class="counter">733</span><span class="counterUp-icon">+</span> </h1>
+                    <h6>Active Customers                    </h6>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 align-self-center">
+                <div class="ltn__counterup-item-3 text-color-white text-center">
+                    <div class="counter-icon"> <img src="{% static 'img/icons/icon-img/3.png' %}" alt="Image"> </div>
+                    <h1><span class="counter">33</span><span class="counterUp-letter">K</span><span class="counterUp-icon">+</span> </h1>
+                    <h6>Pot Of Plants</h6>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 align-self-center">
+                <div class="ltn__counterup-item-3 text-color-white text-center">
+                    <div class="counter-icon"> <img src="{% static 'img/icons/icon-img/4.png' %}" alt="Image"> </div>
+                    <h1><span class="counter">10000</span><span class="counterUp-icon">+</span> </h1>
+                    <h6>Get Rewards</h6>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 align-self-center">
+                <div class="ltn__counterup-item-3 text-color-white text-center">
+                    <div class="counter-icon"> <img src="{% static 'img/icons/icon-img/5.png' %}" alt="Image"> </div>
+                    <h1><span class="counter">21000</span><span class="counterUp-icon">+</span> </h1>
+                    <h6>Reviews</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- COUNTER UP AREA END -->
+
+<br/>
+<br/><br/><br/><br/>
+
+<!-- CALL TO ACTION START (call-to-action-4) -->
+<div class="ltn__call-to-action-area ltn__call-to-action-4 bg-image pt-115 pb-120" data-bg="{% static 'assets/6.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="call-to-action-inner call-to-action-inner-4 text-center">
+                    <div class="section-title-area ltn__section-title-2">
+                        <h2 class="section-subtitle ltn__feature-info">  Any question you have  ?</h2>
+                        <h1 class="section-title white-color">9911554948</h1>
+                    </div>
+                    <div class="btn-wrapper">
+                        <a href="tel:+91-9911554948" class="theme-btn-1 btn btn-effect-1">MAKE A CALL</a>
+                        <a href="{% url 'contactus' %}" class="btn btn-transparent btn-effect-4 white-color">CONTACT US</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ltn__call-to-4-img-1">
+        <img src="{% static 'assets/.png' %}" alt="#">
+    </div>
+    <div class="ltn__call-to-4-img-2">
+        <img src="{% static 'assets/11.png' %}" alt="#">
+    </div>
+</div>
+<!-- CALL TO ACTION END -->
+
+
+  <!-- FEATURE AREA START ( Feature - 3) -->
+  <div class="ltn__feature-area before-bg-bottom-2-- mb--30--- plr--5 mb-120">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__feature-item-box-wrap ltn__border-between-column white-bg">
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 col-12">
+                            <div class="ltn__feature-item ltn__feature-item-8">
+                                <div class="ltn__feature-icon">
+                                    <img src="{% static 'img/icons/icon-img/11.png' %}" alt="#">
+                                </div>
+                                <div class="ltn__feature-info">
+                                    <h4>Curated Products</h4>
+                                    <p>Provide curated products for
+                                        all product</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 col-12">
+                            <div class="ltn__feature-item ltn__feature-item-8">
+                                <div class="ltn__feature-icon">
+                                    <img src="{% static 'img/icons/icon-img/12.png' %}" alt="#">
+                                </div>
+                                <div class="ltn__feature-info">
+                                    <h4>Ready-To-Plant</h4>
+                                    <p>Do not require any additional potting mix</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 col-12">
+                            <div class="ltn__feature-item ltn__feature-item-8">
+                                <div class="ltn__feature-icon">
+                                    <img src="{% static 'img/icons/icon-img/13.png' %}" alt="#">
+                                </div>
+                                <div class="ltn__feature-info">
+                                    <h4>Ultra Breed Plants</h4>
+                                    <p>Improve the genetic potential of plants</p> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 col-12">
+                            <div class="ltn__feature-item ltn__feature-item-8">
+                                <div class="ltn__feature-icon">
+                                    <img src="{% static 'img/icons/icon-img/14.png' %}" alt="#">
+                                </div>
+                                <div class="ltn__feature-info">
+                                    <h4>Free Home Delivery</h4>
+                                    <p>At your doorstep,            
+                                    Deliver in 4-6 days</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FEATURE AREA END -->
+
+
+
+
+
+   <!-- MODAL AREA START (Quick View Modal) -->
+   <div class="ltn__modal-area ltn__quick-view-modal-area">
+    <div class="modal fade" id="quick_view_modal" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                <!-- <i class="fas fa-times"></i> -->
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ltn__quick-view-modal-inner">
+                <div class="modal-product-item">
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <div class="modal-product-img">
+                            <span class="mimg"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="modal-product-info">
+                            <div class="product-ratting">
+                                <ul>
+                                    <li>
+                                        <div data-rating-value="" class="fs-xlarge mrating" data-rating-stars="5" data-rating-readonly="true" data-rating-half="true" ></div> 
+                                    </li>
+                                    <li class="review-total"> <a class="mreviews" href="#"></a></li>
+                                </ul>
+                            </div>
+                             <h3 class="mname"></h3>
+                            <div class="product-price">
+                                <span class="msaleprice"></span>
+                                <del class="mmrp"></del>
+                            </div>
+                            <div class="ltn__product-details-menu-2">
+                                <ul>
+                                    <li>
+                                        <div class="cart-plus-minus">
+                                        <input type="text" value="01" name="qtybutton" class="cart-plus-minus-box">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <form class="d-inline-block" action="{% url 'addtocart' %}" data-toggle="modal" data-target="#add_to_cart_modal">
+                                        <input type="text" hidden="hidden" name="pid" id="pid" value="" class="mprodid">
+                                        <button type="submit" class="theme-btn-1 btn btn-effect-1"><i class="fas fa-shopping-cart"></i>ADD TO CART</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="ltn__product-details-menu-3">
+                                <ul>
+                                    <li>
+                                        <form action="" class="d-inline mprodid1" > 
+                                        <button type="submit" class=" btn-link rounded-circle p-0 m-0"><i class="far fa-heart p-3"></i></button>
+                                        </form>
+                                    </li> 
+                                </ul>
+                            </div>
+                            <hr>
+                            <div class="ltn__social-media">
+                                <h3>Product Description</h3>
+                                <p class="mdesc"></p>
+                            </div>
+                            <hr>
+                            <div class="ltn__social-media">
+                                <ul>
+                                    <li>Share:</li>
+                                    <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                    <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- MODAL AREA END -->
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,89 @@
+{% load static %}
+{% load mathfilters %}
+{% load customwidgets %}
+<link rel="stylesheet" href="{% static 'css/tp/bootstrap.css' %}" />    
+<link rel="stylesheet" href="{% static 'css/design.css' %}" />
+<body style="background-color:#FFFFFF;">
+
+
+<div class="m-auto mb-4">
+
+
+
+<div class="container mt-2 p-2" style="min-height:1000px;">
+
+<div class="m-4 mb-4 float-start h1 fw-bold"><h1>GAGAN PUNIA GROUP</h1></div>
+<div class="m-4 mb-4 float-end"><img src="{% static "assets/logo1.png" %}" width=150px height="105px" alt=""></div>
+<div class="clearfix"></div>
+<div class= "m-4 m-auto text-center"><h3 class="">TAX INVOICE</h3></div>
+
+<div class=" ms-4 p-2 mb-4 float-start rounded">
+<h6 class=" m-2 mb-2 "><b>Order Id:</b> {{orderid}}</h6>
+<h6 class=" m-2 mb-2 "><b>Order Date:</b> {{orderdate}}</h6>
+<h6 class=" m-2 mb-2 "><b>Order Total:</b> ₹ {{ordertotal|floatformat:2}}</h6>
+<h6 class=" m-2 mb-2 "><b>GST Deducted:</b> ₹ {{taxtotal|floatformat:2}} </h6>
+<h6 class=" m-2 mb-2 "><b>Coupon Code (if any):</b> {{couponcode}} </h6>
+<h6 class=" m-2 mb-2 "><b>Discount (if any):</b> ₹ {{disctotal|floatformat:2}} </h6>
+<br/>
+<h6 class="m-2 mb-2 text-black fw-bold">Invoice Number : {{invoiceNo}}</h6>
+<h6 class="m-2 mb-2 text-black fw-bold">Invoice Date : {{invoiceDate}}</h6>
+<br/>
+
+<h6 class="text-black fw-bold m-2 mb-2">Sold by:</h6>
+<h6 class=" m-2 mb-2 ">{{vendor.user.fullName}}</h6>
+<h6 class=" m-2 mb-2 ">{{vendor.address.address1}}, {{vendor.address.address2}}</h6>
+<h6 class=" m-2 mb-2 "> {{vendor.address.state|hyphenurl}} - {{vendor.address.pinCode}}</h6>
+<h6 class=" m-2 mb-2"><b>PAN Number: </b>{{vendor.panNumber}} </h6>
+<h6 class=" m-2 mb-2"><b>GST: </b>{{vendor.gstNumber}} </h6>
+
+
+
+</div>
+<div class=" p-2 me-4 float-end ms-4 rounded">
+<h6 class="text-black fw-bold m-2 mb-2">Shipping Address:</h6>
+<h6 class=" m-2 mb-2 fw-bold ">{{address.contactPerson}} </h6>
+<h6 class=" m-2 mb-2">{{order.user.username}} </h6>
+<h6 class=" m-2 mb-2">{{address.address1}},{{address.address2}} </h6>
+<h6 class=" m-2 mb-2"> {{address.state|hyphenurl}} - {{address.pinCode}}</h6>
+<h6 class=" m-2 mb-2">{{address.contactNumber}} </h6>
+
+</div>
+
+
+<div class="clearfix"></div>
+<h6 class=" text-black fw-bold m-2">Purchase Details:</h6>
+<div class="table-responsive">
+<table class="table table-borderless text-center">
+<thead class="bg-secondary text-light">
+<th class="rounded-start">#</th>
+<th>Item</th>
+<th>Quantity</th>
+<th>List Price</th>
+<th>Discount</th>
+<th>GST</th>
+<th class="rounded-end">Total Price</th>
+</thead>
+<tbody>
+{% for orderitem in orderitems %}
+<tr>
+<td class="">{{forloop.counter}}</td>
+<td class="">{{orderitem.productName}}</td>
+<td class="">{{orderitem.quantity}}</td>
+<td class="">₹ {{orderitem.listPrice|mul:orderitem.quantity|floatformat:2}}</td>
+<td class="">₹ {{orderitem.discountAmount|floatformat:2}}</td>
+<td class="">₹ {{orderitem.taxAmount|floatformat:2}}</td>
+<td class="">₹ {{orderitem.paidPrice|floatformat:2}}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<hr/>
+<p class=" fs-xsmall text-end m-2">This invoice is generated digitally and hence does not require any signatures.</p>
+<p class=" fs-xsmall text-end m-2">Paperless billing</p>
+
+
+</div>
+</div>
+
+</body>

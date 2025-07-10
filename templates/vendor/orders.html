@@ -1,0 +1,91 @@
+{% extends 'design.html' %}
+{% load csswidgets%}
+
+{% block content %}
+
+{% if orders.count == 0 %}
+<div class="text-center m-auto mt-5 p-4 bg-lgreen shdw1 fw-bold fs-3">No Orders Yet!</div>
+{% endif %}
+{% for order in orders %}
+<div class="p-3 rounded">
+    <div class="bg-lsilver border p-4 rounded shdw1">
+        <h6 class="fw-bold">{{order.order.orderedOn|date:"l, d F Y"}}</h6>
+        <h4>{{order.order.orderId}}</h4>            
+        <br/>
+        <p>{{forloop.counter}}) {{order.productName}}, {{order.quantity}} Unit(s), Tax: ₹ {{order.taxAmount|floatformat:2}}, Discount: ₹{{order.discountAmount|floatformat:2}}, Total Paid: ₹{{order.paidPrice|floatformat:2}}
+        </p>
+        
+        
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" hidden="hidden" name="orderid" value="{{order.id}}"/>
+            <div class="row">
+                <div class="col">
+                    <h6 class="fw-bold p-2">Update Order Status: </h6>                    
+                    <select name="orderstatus" class="form-select" required>
+                        {% if order.order.orderStatus != "packed" and order.order.orderStatus != "shipped" and order.order.orderStatus != "delivered" %}
+                        <option selected="true" disabled="disabled">Select Order Status</option>
+                        <option value="packed">Packed</option>
+                        <option value="shipped">Shipped</option>                        
+                        <option value="delivered">Delivered</option>                        
+                        {% elif order.order.orderStatus == "packed" %}
+                        
+                        <option selected="true" value="packed" >Packed</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        {% elif order.order.orderStatus == "shipped" %}
+                        <option value="packed">Packed</option>                        
+                        <option value="shipped" selected="true">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        {% elif order.order.orderStatus == "delivered" %}
+                        <option value="packed">Packed</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered" selected="true">Delivered</option>
+                        {% endif %}                                                
+                    </select>
+                    <label class="fw-bold ms-2">Delivered On:</label>
+                    <input name="deliverDate" type="date" class="form-control" value="{{order.order.deliveryDate|date:"Y-m-d" }}" />
+                    
+                </div>
+                <div class="col">
+                    <label class="fw-bold p-2" for="trackingid">Add Tracking Details:</label>
+                    <input name="trackingid" type="text" class="form-control mb-2" placeholder="AWB/Tracking Number" value="{{order.order.trackingInfo}}" />
+                    <label class="fw-bold ms-2">AWB/Tracking Number:</label>
+                    <input name="trackingProvider" type="text" class="form-control" placeholder = "Courier Partner" value="{{order.order.trackingProvider}}" />                    
+                </div>
+
+            </div>
+            
+            
+            <button class="btn btn-success mt-2">Update</button>
+        </form>
+        <a class="btn btn-danger mt-2" href="{% url 'vendor:generateinvoice' order.order.id %}">Print Invoice</a>
+    </div>
+    
+    <div class="clearfix"></div>
+    
+
+    {% for item in order.orderitems_set.all %}
+    
+        <div class="m-2 text-center text-lg-start">
+            <span class="fw-bold mb-2 d-inline-block"><a href="{% url 'details' item.id %}" style="color:black;">{{item.productname}}</a></span><br>
+            <span class="fw-bold me-5">Price: ₹ {{item.paidPrice|floatformat:2}}</span>
+            <span class="fw-bold me-5">Tax:  ₹ {{item.taxamt|floatformat:2}}</span>
+            <span class="fw-bold me-5">Discount:  ₹ {{item.discountamt|floatformat:2}}</span>
+            <span class="fw-bold">{{item.quantity}} Unit(s)</span>
+        </div>
+
+        
+            
+    
+    
+    {% endfor %}
+    
+
+
+</div>
+{% endfor %}
+
+
+{% endblock content %}
+

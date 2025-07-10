@@ -1,0 +1,234 @@
+<div class="p-1 pb-3 rounded bg-lgreen mt-1 mb-2 border">
+  <form action="{% url 'filterproduct' %}" method="GET">
+    <div class="row p-0 m-0">
+      <div class="col-auto">
+        <label class="form-label fs-small fw-bold">Minimum Price</label>
+        <input type="number" name="minprice" id="" class="form-control form-control-sm" value="{{minprice}}" placeholder="Minimum Price">
+      </div>
+
+      <div class="col-auto">
+        <label class="form-label fs-small fw-bold">Maximum Price</label>
+        <input type="number" name="maxprice" id="" class="form-control form-control-sm" value="{{maxprice}}" placeholder="Maximum Price">        
+      </div>
+
+      <div class="col-auto">
+        <label class="form-label fs-small fw-bold">Plant Type</label>
+        <select name="planttype" id="" class="form-select form-select-sm">
+          <option value="">-</option>
+          {% if planttype == "summer" %}
+          <option value="summer" selected="selected">Summer Plants</option>
+          {% else %}
+          <option value="summer">Summer Plants</option>
+          {% endif %}
+    
+          {% if planttype == "winter" %}
+          <option value="winter" selected="selected">Winter Plants</option>
+          {% else %}
+          <option value="winter">Winter Plants</option>
+          {% endif %}
+    
+          {% if planttype == "monsoon" %}
+          <option value="monsoon" selected="selected">Monsoon Plants</option>
+          {% else %}
+          <option value="monsoon">Monsoon Plants</option>
+          {% endif %}
+    
+          {% if planttype == "allseason" %}
+          <option value="allseason" selected="selected">All Seasons</option>
+          {% else %}
+          <option value="allseason">All Seasons</option>
+          {% endif %}
+    
+        </select>
+      </div>
+
+      <div class="col-auto">
+        <label class="form-label fs-small fw-bold">Product Size</label>
+        <select name="productsize" id="" class="form-select form-select-sm">
+          <option value="">-</option>
+    
+          {% if productsize == "small" %}
+          <option value="small" selected="selected">Small</option>
+          {% else %}
+          <option value="small">Small</option>
+          {% endif %}
+    
+          {% if productsize == "medium" %}
+          <option value="medium" selected="selected">Medium</option>
+          {% else %}
+          <option value="medium">Medium</option>
+          {% endif %}
+    
+          {% if productsize == "large" %}
+          <option value="large" selected="selected">Large</option>
+          {% else %}
+          <option value="large">Large</option>
+          {% endif %}
+    
+          {% if productsize == "extralarge" %}
+          <option value="extralarge" selected="selected">Extra Large</option>
+          {% else %}
+          <option value="extralarge">Extra Large</option>
+          {% endif %}
+    
+        </select>
+      </div>
+
+      <div class="col-auto">
+        <label class="form-label fs-small fw-bold">Sort By</label>
+        <select name="sorting" id="" class="form-select form-select-sm">
+
+          {% if sortby == 'sortascending' %}
+          <option value="sortascending" selected="selected">Sort by Price (Ascending)</option>
+          {% else %}
+          <option value="sortascending">Sort by Price (Ascending)</option>
+          {% endif %}
+    
+          {% if sortby == 'sortdescending' %}
+          <option value="sortdescending" selected="selected">Sort by Price (Descending)</option>
+          {% else %}
+          <option value="sortdescending">Sort by Price (Descending)</option>
+          {% endif %}
+    
+          {% if sortby == 'newfirst' %}
+          <option value="newfirst" selected="selected">Newest First</option>
+          {% else %}
+          <option value="newfirst">Newest First</option>
+          {% endif %}
+    
+          {% if sortby == 'oldfirst' %}
+          <option value="oldfirst" selected="selected">Oldest First</option>
+          {% else %}
+          <option value="oldfirst">Oldest First</option>
+          {% endif %}
+          
+          {% if sortby == 'rating' %}
+          <option value="rating" selected="selected">Rating</option>
+          {% else %}
+          <option value="rating">Rating</option>
+          {% endif %}
+    
+    
+        </select>
+      </div>
+
+
+
+      <div class="col-auto">
+        <input type="text" hidden="hidden" name="category" value="{{categoryid}}" id="">
+        <input type="text" hidden="hidden" name="query" value="{{query}}" id="">        
+        <div style="margin-top:30px;">
+        <button type="submit" class="btn btn-sm bg-secondary text-light ">Filter</button>
+        {% if categoryid is None or categoryid == '' %}
+        <a href="{% url 'clearfilter' %}" class="btn btn-sm bg-danger text-light">Clear</a>
+        {% else %}
+        <a href="{% url 'clearfilter' categoryid %}" class="btn btn-sm bg-danger text-light">Clear</a>
+        {% endif %}
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+   
+
+    
+
+  </form>
+</div>
+
+
+
+
+{% comment %}
+
+<div class="p-2">
+  <form action="{% url 'filterproduct' %}" method="GET">
+    <div class="row m-auto text-center bg-ite p-2 rounded">
+
+      <div class="col-12 col-lg">
+        <span class="small"> Min Price</span>
+        <input type="number" name="minprice" id="" class="form-control " value="{{minprice}}">
+      </div>
+
+      <div class="col-12 col-lg">
+        <span class="small"> Max Price</span>
+        <input type="number" name="maxprice" id="" class="form-control " value="{{maxprice}}">
+      </div>
+
+      <div class="col-12 col-lg">
+        <span class="small"> Plant Type</span>
+        <select name="planttype" id="" class="form-select form-select-sm">
+          <option value="">-</option>
+          {% if planttype == "summer" %}
+          <option value="summer" selected="selected">Summer Plants</option>
+          {% else %}
+          <option value="summer">Summer Plants</option>
+          {% endif %}
+
+          {% if planttype == "winter" %}
+          <option value="winter" selected="selected">Winter Plants</option>
+          {% else %}
+          <option value="winter">Winter Plants</option>
+          {% endif %}
+
+          {% if planttype == "monsoon" %}
+          <option value="monsoon" selected="selected">Monsoon Plants</option>
+          {% else %}
+          <option value="monsoon">Monsoon Plants</option>
+          {% endif %}
+
+          {% if planttype == "allseason" %}
+          <option value="allseason" selected="selected">All Seasons</option>
+          {% else %}
+          <option value="allseason">All Seasons</option>
+          {% endif %}
+
+        </select>
+      </div>
+
+      <div class="col-12 col-lg">
+        <span class="small"> Product Size</span>
+        <select name="productsize" id="" class="form-select form-select-sm">
+          <option value="">-</option>
+
+          {% if productsize == "small" %}
+          <option value="small" selected="selected">Small</option>
+          {% else %}
+          <option value="small">Small</option>
+          {% endif %}
+
+          {% if productsize == "medium" %}
+          <option value="medium" selected="selected">Medium</option>
+          {% else %}
+          <option value="medium">Medium</option>
+          {% endif %}
+
+          {% if productsize == "large" %}
+          <option value="large" selected="selected">Large</option>
+          {% else %}
+          <option value="large">Large</option>
+          {% endif %}
+
+          {% if productsize == "extralarge" %}
+          <option value="extralarge" selected="selected">Extra Large</option>
+          {% else %}
+          <option value="extralarge">Extra Large</option>
+          {% endif %}
+
+
+
+        </select>
+      </div>
+
+      <div class="col-12 col-lg">
+        <button type="submit" class="btn btn-sm bg-green text-light mt-4">Filter</button>
+        <a href="{% url 'clearfilter' %}" class="btn btn-sm bg-secondary text-light mt-4">Clear Filter</a>
+      </div>
+
+    </div>
+  </form>
+
+</div> {% endcomment %}

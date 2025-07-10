@@ -1,0 +1,351 @@
+{% extends 'design.html' %}
+{% load csswidgets %}
+{% load imagekit %}
+{% load customwidgets %}
+{% load static %}
+
+{% block title1 %}{{product.productName}}{% endblock %}
+{% block title2 %}{{product.productName}}{% endblock %}
+
+
+{% block content %}
+
+<div class="ltn__shop-details-area pb-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="ltn__shop-details-inner mb-60">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="ltn__shop-details-img-gallery">
+                                <div class="ltn__shop-details-large-img">
+                                    {% for p in product.productmedia_set.all %}
+                                    <div class="single-large-img">
+                                        <a href="{{p.productmedia.url}}" data-rel="lightcase:myCollection">                                            
+                                            <img src="{{p.productmedia.url}}" alt="Image">
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+
+                                    
+                                </div>
+                                <div class="ltn__shop-details-small-img slick-arrow-2">
+                                    {% for p in product.productmedia_set.all %}
+                                    <div class="single-small-img">
+                                        <img src="{{p.productmedia.url}}" alt="Image">
+                                    </div>
+                                    {% endfor %}
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="modal-product-info shop-details-info pl-0">
+                                <div class="product-ratting">
+                                    <ul>                                        
+                                        <li><div data-rating-value="{{product|avgrating}}" class="fs-xlarge" data-rating-stars="5" data-rating-readonly="true" data-rating-half="true" ></div></li>                                                                           
+                                        <li class="review-total"> <a href="#"> {{product|reviewsCount}}</a></li>
+                                    </ul>
+                                </div>
+                                <h3>{{product.productName}}</h3>
+                                <div class="product-price">
+                                    <span>Rs. {{product.productSalePrice}}</span>
+                                    <del>Rs. {{product.productMRP}}</del>
+                                    <h3>Per Unit Price</h3>   
+                                  
+                                       <form class="d-inline-block" action="{% url 'addtocart' %}" >
+                                        
+                                        
+                                        {% if product.category.categoryName == "Service" %}
+                                           <h4 style="margin-bottom: -10px;">Select Appointment Schedule</h4>  
+                                    <input type="date" name="date" style="font-size: 16px;margin-top: 0px;"class="form-select">
+                                    <select name="time_period" style="font-size: 16px;" class="form-select">
+                                    <option value="09:00-12:00">09:00 AM - 12:00 PM</option>
+                                    <option value="12:00-15:00">12:00 PM - 03:00 PM</option>
+                                    <option value="15:00-18:00">03:00 PM - 06:00 PM</option>
+                                    <option value="18:00-21:00">06:00 PM - 09:00 PM</option>
+                                    </select>
+                                </div>
+                               {% endif %}
+                                <div class="ltn__product-details-menu-2">
+                                    <ul>
+                                     
+                                        <li>
+                                            <div class="cart-plus-minus">
+                                                <input type="text" value="1" name="qtybutton" class="cart-plus-minus-box">
+                                            </div>
+                                        </li>
+                                        <li>
+                                            
+                                                <input type="text" hidden="hidden" name="pid" id="pid" value={{product.id}}>                                                
+                                                <button type="submit" class="theme-btn-1 btn btn-effect-1">ADD TO CART</button>
+                                                
+                                                <button type="submit" class="theme-btn-1 btn btn-effect-1">Buy Now</button>
+                                        </li>
+                                    </ul>
+                                </form>
+
+                                </div>
+                                <div class="ltn__product-details-menu-3">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="" title="Wishlist" data-toggle="modal" data-target="#liton_wishlist_modal">
+                                                <i class="far fa-heart"></i>
+                                                <span>Add to Wishlist</span>
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                                <hr>
+                                <div class="ltn__social-media">
+                                    <ul>
+                                        <li>Share:</li>
+                                        <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                        <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                        
+                                    </ul>
+                                </div>
+                                <hr>
+                                <div class="ltn__safe-checkout">
+                                    <h5>Guaranteed Safe Checkout</h5>
+                                    {{product.productTable}}
+                                    
+                                </div>                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Shop Tab Start -->
+                <div class="ltn__shop-details-tab-inner ltn__shop-details-tab-inner-2">
+                    <div class="ltn__shop-details-tab-menu">
+                        <div class="nav">
+                            <a class="active show" data-toggle="tab" href="#liton_tab_details_1_1">Description</a>
+                            <a data-toggle="tab" href="#liton_tab_details_1_2" class="">Reviews</a>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="liton_tab_details_1_1">
+                            <div class="ltn__shop-details-tab-content-inner">
+                                <p>{{product.productDescription}}</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="liton_tab_details_1_2">
+                            <div class="ltn__shop-details-tab-content-inner">
+                                <h4 class="title-2">Customer Reviews</h4>
+                                <div class="product-ratting">
+                                    <ul>
+                                        <li><div data-rating-value="{{product|avgrating}}" class="fs-xlarge" data-rating-stars="5" data-rating-readonly="true" data-rating-half="true" ></div></li>                                                                           
+                                        <li class="review-total"> <a href="#"> {{product|reviewsCount}}</a></li>
+                                    </ul>
+                                </div>
+                                <hr>
+                                <!-- comment-area -->
+                                <div class="ltn__comment-area mb-30">
+                                    <div class="ltn__comment-inner">
+                                        {% if reviews.count == 0 %}No Reviews Yet!
+                                        {% else %}
+                                        {% for c in reviews %}
+                                        <ul>
+                                            <li>
+                                                <div class="ltn__comment-item clearfix">
+                                                    <div class="ltn__commenter-img">
+                                                        {% comment %} <img src="img/testimonial/1.jpg" alt="Image"> {% endcomment %}
+                                                    </div>
+                                                    <div class="ltn__commenter-comment">
+                                                        <h6><a href="#">{{c.user|getusername}}</a></h6>
+                                                        <div class="product-ratting">
+                                                            <div data-rating-value="{{c.rating}}" class="dataReadonlyReview fs-xlarge" data-rating-stars="5" data-rating-readonly="true" data-rating-half="true" ></div> 
+                                                        </div>
+                                                        <h4><b>{{c.reviewSubject}}</b></h4>
+                                                        <p>{{c.reviewDescription}}</p>
+                                                        <span class="ltn__comment-reply-btn">Added : {{c.addedOn|date:'d/m/Y'}}</span>
+                                                    </div>
+                                                </div>
+                                            </li>                                          
+                                        </ul>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                
+                                {% comment %} {% if not request.user.is_anonymous == True and not product|alreadyreviewed:request %} {% endcomment %}
+                                <!-- comment-reply -->
+                                <div class="ltn__comment-reply-area ltn__form-box mb-30">                                   
+                                        <form action="" method="POST">
+                                            {% csrf_token %}
+                                        <h4 class="title-2">Add a Review</h4>
+                                        <div class="mb-30">
+                                            <div class="add-a-review">
+                                                <h6>Your Ratings:</h6>
+                                                <div class="product-ratting">
+                                                    <div class="input-group mb-3 px-4 opacity-75 fs-xlarge" id="review">  
+                                                        <input type="text" name="rating" hidden="hidden" id="srating">                          
+                                                        {% comment %} {{form.rating|add_class:"form-control form-control-lg rounded-end border-dark"|attr:"placeholder:Review Heading"}} {% endcomment %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-item input-item-textarea ltn__custom-icon">
+                                            {{form.reviewSubject|attr:"Placeholder:Review Heading"}}
+                                        </div>
+                                        <div class="input-item input-item-textarea ltn__custom-icon">
+                                            {{form.reviewDescription|attr:"Placeholder:Review"}}
+                                        </div>
+                                        <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">Submit</button>
+                                    </form>
+                                </div>
+                                {% comment %} {% endif %} {% endcomment %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Shop Tab End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SHOP DETAILS AREA END -->
+{% endblock content %}
+
+
+
+
+<div class="row container p-5 m-auto mt-2 bg-lgreen shadow rounded-3">
+    <div class="col-12 col-lg-5 p-3 xzoom-container text-center">
+        <img class="xzoom5" id="xzoom-magnific" width="300" src="{{ product|primaryimageX}}"
+            xoriginal="{{ product|primaryimageX}}" />
+
+        <div class="xzoom-thumbs">
+            {% for p in product.productmedia_set.all %}
+            {% if forloop.counter == 1 %}
+            <a href="{{p.productmedia.url}}"><img src="{{p.productmedia.url}}" class="xzoom-gallery5 m-2 p-1"
+                    xpreview="{{product|primaryimageX}}" width="64" height="84" /></a>
+
+            {% else %}
+            <a href="{{p.productmedia.url}}"><img src="{{p.productmedia.url}}" class="xzoom-gallery5 m-2 p-1"
+                    width="64" height="84" /></a>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+    <div class="col-12 col-lg-7 p-3">
+        <h5>{{product.category}}</h5>
+        <h1 class="text-success">{{product.productName}}</h1>
+
+        <div data-rating-value="{{product|avgrating}}" class="fs-xlarge" data-rating-stars="5" data-rating-readonly="true" data-rating-half="true" >{{product|reviewsCount}}</div>                
+        
+        <p><span class="fs-2"> Rs. {{product.productSalePrice|floatformat:2}}</span><span
+                class="text-danger text-decoration-line-through fs-6"> <b>MRP {{product.productMRP}}</b></span></p>
+
+        <form action="{% url 'addtocart' %}" class="d-inline">
+            <b class="fw-bold"> Select Quantity</b>
+            <input type="text" hidden=hidden name="pid" id="pid" value={{product.id}}>
+
+            <div class="input-group mt-3" style="z-index:0">
+                <button class="btn-outline-danger btn fw-bold border-end-0 fs-6" id="subq"><i class="fa fa-minus"></i></button>
+                <input type="text" name="units" id="units" value="1" class="form-control border-dark text-center" style="max-width:50px;">
+                <button class="btn-outline-success btn fw-bold fs-6 border-start-0"  id="addq" ><i class="fa fa-plus"></i></button>                
+            </div>
+            <button type="submit" class="btn bg-green text-light mt-3">Add To Cart</button>           
+
+        </form>
+        <form action="{% url 'addtowishlist' product.id %}" class="d-inline">
+            <button type="submit" class="btn btn-outline-dark mt-3">Add To WishList</button>
+        </form>
+        <h6 class="fw-bold mt-5">Description</h6>
+        {{product.productDescription}}
+    </div>
+
+</div>
+
+<div class="row container p-3 m-5 mt-2 m-auto mb-2 shadow rounded-3 bg-lgreen">
+    <div class="col p-3">
+
+        <h4 class="fw-bold">Reviews
+            <hr/>
+            {% if request.user.is_anonymous == True or product|alreadyreviewed:request %}
+            {% else %}
+            <a href="{% url 'addreview' product.id %}" class="btn btn-secondary ms-2 ">Add a Review</a>
+            {% endif %}
+        </h4>
+        <div class="">
+            {% if reviews.count == 0 %}No Reviews Yet!
+            {% else %}
+            {% for c in reviews %}
+            <div class="px-2 rounded">                
+                <span class="ms-2"><i class="fas fa-user me-2"></i>{{c.user|getusername}}
+                    <span class="btn btn-sm bg-green">Verified Purchase</span>
+                </span>
+                <p class="opacity-75 fs-small ms-2 mt-1">Reviewed on {{c.addedOn}}</p>
+                <p class="ms-2 mt-2 mb-0 fw-bold">{{c.reviewSubject}}</p>
+                <div data-rating-value="{{c.rating}}" class="dataReadonlyReview fs-xlarge" data-rating-stars="5" data-rating-readonly="true" data-rating-half="true" ></div>                
+                
+                <p class="ms-2 mt-2">{{c.reviewDescription}}</p>
+            </div>
+            <hr/>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% block scripts %}
+<script>    
+    $( "#subq" ).click(function( event ) {
+        event.preventDefault();
+        var q = document.getElementById("units").value
+        if(parseInt(q) > 1)
+        {
+        document.getElementById("units").value = parseInt(q) - 1
+        }
+        
+      });
+
+      $( "#addq" ).click(function( event ) {
+        event.preventDefault();
+        var q = document.getElementById("units").value
+        if(parseInt(q) < 10)
+        {
+        document.getElementById("units").value = parseInt(q) + 1
+        }
+        
+      });
+
+</script> 
+{% endblock scripts %}
+
+{% comment %} <script>
+    
+    $(".dataReadonlyReview").rating({
+        "readonly": true,
+        "value":$(this).attr("data-rating-value"),
+        alert("DD")
+      });
+      
+</script>
+
+<script>
+    
+    $("#avgrating").rating({
+        "readonly": true,
+        "value":$("#avgrating").attr("data-rating-value"),
+        "half": true,
+      });
+</script> {% endcomment %}
+
+
+
+
+

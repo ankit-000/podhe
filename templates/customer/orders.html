@@ -1,0 +1,73 @@
+{% extends 'design.html' %}
+{% load csswidgets%}
+{% load customwidgets %}
+
+{% block content %}
+{% if orders.count == 0 %}
+<div class="text-center m-auto bg-lgreen mt-5 p-4 shdw1 fw-bold fs-3">No Orders Yet!</div>
+{% endif %}
+{% for order in orders %}
+<div class="shdw1 bg-lgreen m-4 p-3 rounded">
+    <div class="float-lg-start">
+        <h6 class="fs-small fw-bold">{{order.orderedOn|date:"l, d F Y"}}</h6>
+        <h3>{{order.orderId}}</h3>    
+        <h6 class="">Total Paid: Rs. {{order.orderTotal|floatformat:2}}</h6>
+        <h6 class="">Order Status: {{order.orderStatus}}</h6>
+
+    </div>
+    <div class="float-lg-end text-center border rounded">        
+        {% if order.trackingProvider != "" %}
+        <b class="p-2 text-light bg-secondary d-block rounded-top">Tracking Info</b>
+            <div class="p-2 bg-light">
+                <h6>Courier Partner: {{order.trackingProvider}}, 
+                AWB number: {{order.trackingInfo}}</h6>
+            </div>
+        {% endif %}        
+        
+        
+        
+        
+    </div>
+    <div class="clearfix"></div>
+    <hr/>
+
+    {% for item in order.orderitems_set.all %}
+    
+        <div class="m-2 text-center text-lg-start">
+            <span class="fw-bold mb-2 d-inline-block"><a href="{% url 'details' item.productId %}" style="color:black;">{{item.productName}}</a></span><br>
+            <span class="fw-bold me-5">Price: Rs. {{item.paidPrice|floatformat:2}}</span>
+            <span class="fw-bold me-5">Tax:  Rs. {{item.taxAmount|floatformat:2}}</span>
+            <span class="fw-bold me-5">Discount:  Rs. {{item.discountAmount|floatformat:2}}</span>
+            <span class="fw-bold">{{item.quantity}} Unit(s)</span>
+            <span>
+            {% if order.orderStatus == "delivered" and order.deliveryDate|returnvalid and item.returnRequested == False %}            
+            <form action="{% url 'returnproduct' item.id %}" method="POST" class="d-inline">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger btn-sm p-1 ms-2">Return</button>
+            </form>
+            {% elif item.returnRequested %}
+            <span class="text-danger ms-2 fw-bold">{{item.returnStatus}}</span>
+            {% endif %}
+            </span>
+        </div>
+
+        <hr class="me-5"/>
+            
+    
+    
+    {% endfor %}
+    
+<a class="btn btn-outline-success ms-2" href="{% url 'getinvoice' order.id%}">Print Invoice</a>
+        {% if order.orderStatus == "Processing" or order.orderStatus == "packed" %}
+        <form action="{% url 'cancelorder' order.id %}" method="POST" class="d-inline">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger ms-2">Cancel Order</button>
+        </form>        
+        {% endif %}
+
+</div>
+{% endfor %}
+
+
+{% endblock content %}
+
